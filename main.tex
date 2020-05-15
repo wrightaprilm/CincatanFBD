@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{xcolor}
+
+\newcommand{\amw}[1]{{\textcolor{ForestGreen}{AW: #1}}} % %edit
+
+\title{Testing character-based clock models in phylogenetic paleobiology: a case study with Cambrian echinoderms}
+%Davey- For a working title, how about something like, "Testing character-based clock models in phylogenetic paleobiology: a case study with Cambrian echinoderms?" Feel free to change it up now and/or as we move along!
+
+\author{wright.aprilm }
+\date{January 2020}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+
+We can divide macroevolutionary hypotheses into two non-mutually exclusive groups: those making predictions about origination and extinction dynamics, and those making predictions about rates and modes of anatomical change. 
+The latter group includes hypotheses about shifts in rates of anatomical change and hypotheses about driven trends in which particular character states become more (or less) common over time.  
+Hypotheses predicting such pattern come both from macroecological theory and from evolutionary‑developmental theory, and thus span a range of basic issues including developmental, ecological, and physical constraints, and selection (Valentine 1969, 1980). 
+Research programs dedicated to assessing shifts in rates and modes of anatomical evolution have been staple of quantitative paleobiology since the early 1990’s. 
+Accordingly, anatomical character evolution models that describe the predictions of these different macroevolutionary hypotheses have important theoretical implications for these endeavors. %\amw{I'm not sure what this sentence means}
+
+Phylogeneticists have long been interested in the same sorts of character evolution models, albeit for very different reasons.  
+Hypotheses of phylogenetic relationships make exact predictions about character state evolution among taxa given observed data and models of character change (e.g., Felsenstein 1981).  
+Our expectations about character state associations among taxa given consistent rates of change through time and unbiased character state transitions simply are different from those given variable rates through time and/or biased character state acquisition.  
+This is particularly true when we include divergence times as part of phylogenetic hypotheses (Huelsenbeck et al. 2000; Sanderson 2002; Drummond et al. 2006): but it is still true if we worry only about general cladistic relationships (i.e., which taxa are most closely related to each other; Felsenstein 1981; Hasegawa et al. 1985; Wright et al. 2016).  
+In other words, many of the conceptual mice that paleobiologists seek to capture are the conceptual mouse-traps that systematists seek to use to capture phylogenetics.  
+
+Many readers’ first instincts will be that this presents paleobiological phylogeneticists with a quandary: which comes first, the character evolution models or the phylogenetic inference?  This is particularly true because one of the reasons why paleobiologists often choose particular clades for phylogenetic and other analyses because the taxon represents an appropriate system for assessing alternative hypotheses about macroevolutionary dynamics, including those positing different types of character evolution models.  For example, our alternate ideas for explaining early bursts of disparity (e.g., declining rates of change vs. limited character space; see Foote 1997) or active trends (e.g., driven trends [= biased state change] vs. species selection or phylogenetic effects; see Raup and Gould 1974; Stanley 1975; McShea 1994) correspond to different models of character evolution in phylogenetic analyses. Moreover, such hypotheses apply to many and even all of the characters available to paleontologists for study, there usually no recourse to “independent” character data for phylogenetic analysis such as was commonly prescribed for tree‑based macroevolutionary studies (e.g., Harvey and Pagel 1991).
+
+Another way to look at this is the Catch-22 that might arise if we were to submit a paper about phylogenetic relationships to a journal such as Journal of Paleontology and a paper about a macroevolutionary issue such as shifts in rates of anatomical change to a journal such as Paleobiology with both papers using the same data set.  For the phylogeny paper, we (should!) need to convince reviewers and editors that the models of character change are sufficiently complex that we can trust the resulting phylogeny. For the rate-shift paper, we (should!) need to convince reviewers and editors that the null hypotheses, i.e., continuous rates of change over time (i.e., strict clocks) are inadequate before rejecting them in favor of the more complex idea that rates changed over time.  In other words, our burdens of proof run in opposite directions even though we actually are discussing the same sets of evolutionary parameters and simply putting more emphasis on one set or another.  
+
+Part of the dilemma here stems from a historical view that we should treat phylogenetic analysis and macroevolutionary analysis as two separate endeavors (e.g., Harvey and Pagel 1991).  Here, we advocate a very different approach that stems from Bayesian phylogenetic approaches.  That is, we should not view phylogenetic analysis and macroevolutionary analysis as two independent projects, but instead as two parts of the same endeavor of unravelling the evolutionary history of fossil taxa.  These evolutionary histories include when clades and lineages diverged, the consistency of character change rates, biases in state acquisition, and (of course) exactly how taxa were related to each other.  Along the same lines, we have to accept and even embrace the fact that there will always be some degree of uncertainty in all of these things.  These uncertainties are not reason to abandon the endeavor as hopeless; on the contrary, it will mean that those conclusions that we can reach do not assume that specific historical details are true.  
+
+In this work, we will provide an example of the approach that we are advocating using a series of analyses of the Cincta, a clade of extinct Cambrian Echinoderms. We will detail how paleobiologists can adapt different “clock” models and character state evolution models initially devised to accommodate uncertainties in molecular evolution to represent and model macroevolutionary hypotheses.  In doing so, we will also outline protocol that paleontologists can replicate to conduct analogous analyses on other clades.  We will emphasize how the combination of Markov Chain Monte Carlo analyses and stepping‑stone tests allow us to marginalize specific details of character evolution models and phylogenetic relationships in order to generate the best joint summary of a clade’s evolutionary history.  Because there are innumerable possible models that one might consider, we will draw attention to existing methods with which paleontologists might already be familiar that should be useful for suggesting particular models as worthy of consideration.  Finally, we will briefly outline other theoretical and methodological areas that remain for paleobiologists and systematists to resolve and unite in the future. 
+
+.  
+
+
+
+Section discussing the cinctan paleobiology and their fossil record
+
+\section{Methods}
+
+The fossilized birth-death is a hierarchical model, meaning that different model subcomponents explain the evolution of the phylogenetic characters (the morphological evolution model), the distribution of evolutionary rates across the tree (the clock model), and the model that describes the speciation, extinction and sampling events leading to the tree (the tree model). 
+Below, we describe a hierarchical approach to model-fitting, in which we fit a model to each subcomponent.
+The model subcomponents are then assembled into a total fossilized birth-death process.
+
+For each model subcomponent, we first ran an MCMC in RevBayes to assess how long it takes for the analysis to reach convergence. 
+Then, using this value, we ran 20 steppingstone replicates to calculate a marginal likelihood for the data.
+Stepping-stone model fitting samples iteratively in the space between the prior and the posterior.
+The aim in doing this is to estimate the probability of the data summed over all possible values for parameters. 
+This enables the calculation of an unbiased marginal likelihood, in contrast to MCMC, which will be biased towards regions of good solutions. 
+
+The result of each stepping-stone analysis will be a marginal likelihood.
+Because phylogenetic likelihoods tend to be quite small, they are typically reported as log-transformed values.
+This means that for model comparisons, we used the log Bayes Factor, which is represented by the character \textit{K}, and given via the formula:
+
+\begin{center}
+  \[  \textit{K}=ln[BF(M0,M1)]=ln[P(X \textbar M0)] - ln[P(X \textbar M1)],  \]
+\end{center}    
+    
+In the above eqaution, the Bayes Factor for model comparison between Model 0 and model 1 is equal to the probability of model 0 minus model 1. The final Bayes Factor is calculated by exponetiating \textit{K}:
+
+\begin{center}
+  \[  BF(M0,M1)=\textit{e}^\textit{K} \]
+\end{center}
+
+The final Bayes Factor is a single value for which a value greater than one constitutes support for model one and a value less than negative one is support for model zero. 
+
+ Within each model subcomponent, Bayes Factors were used to compare different candidate models. 
+The winning candidate model for each subcomponent was then used to estimate the subsequent FBD trees.
+
+\subsection{Morphological Evolution Models}
+
+We compared two models for morphological character evolution. 
+Both were based on the basic Mk model \citep{Lewis2001}. 
+In this model, it is assumed that any character has an equal probability change and reversal between any two states. 
+The data matrix was partitioned according to the number of character states, so that the transition matrix of the model was correctly specified.
+We used Gamma-distributed rate heterogeneity to allow different characters in the matrix to have different evolutionary rates.
+Our first model is exactly as described above. 
+In the second model, data were partitioned into feeding and non-feeding characters.
+Then the above model was applied.
+In effect, the second model has two times as many parameters as the first, one for each set of characters.
+
+Convergence was reached after about 80,000 generations, as checked by eye in the software Tracer \citep{Rambaut2018}. 
+Therefore, each stepping stone was run for 100,000 generations to account for any late-converging stones.
+
+\subsection{Clock Models}
+
+A phylogeny cannot be estimated without a model of character evolution. 
+Hence, the morphology model was estimated first.
+Next, we fit a clock model. 
+In order to do this, we used out best-fit morphology model and a simple, time-homogeneous FBD model to compete different clock models against one another.
+The four candidate clock models were as follows.
+\begin{itemize}
+    \item A strict clock: In this model, all branch rates are assumed to be equal. The rate of evolutionary change is sampled from an exponential distribution. The strict clock model is most simple clock model. It assumes that all branches follow a single, constant rate of morphological evolution. Although simplistic, some studies have found surprising degree of concordance with fossil data fitting a strict morphological clock even when models incorporating rate variation provide a better statistical fit (Wright, 2017, Drummond and Stadler, 2016). The strict clock model has one advantage in its simplicity: it adds only one parameter to the analyses, whereas relaxed clock models require many additional parameters.
+    \item An uncorrelated lognormal clock: This clock treats each branch as an independent draw from a distribution.  In this case, we used a lognormal distribution, which says most evolutionary rates are likely to be low, but with allowances for some branches to have very high rates. It should be noted that because each branch is a separate draw, the rate of an ancestral branch's evolution may be very different than its descendants - either greater or lesser.
+    \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor. This will favor smaller rate shifts than those seen in an uncorrelated clock. We modeled the distributions per branch as lognormal.
+    \item Early Burst: This clock models rates of evolution as exponentially decaying over time. This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. Prior analyses have indicated that there may be an early burst of diversification in this clade.
+\end{itemize}
+
+Each of these models has a different number of parameters and took a different amount of time to converge. Therefore, for each model, we first ran an exploratory MCMC to see how long convergence takes. Then we used the convergence value to choose the number of iterations per stepping stone.
+A table of competed models can be seen in table X.
+
+\subsection{Tree Models}
+
+In all of our comparisons of tree models, we used variants of the fossilized birth-death model.
+The first FBD model is a time-homogeneous model in which it is assumed that one rate of speciation, extinction, fossil sampling and sampling at the last occurrence time apply to the whole tree.
+The other models competed are skyline models.
+These models assume that the parameters of the FBD analysis can vary between discrete time bins.
+For Cintans, previous authors have observed what appears to be an early burst of evolutionary diversity in the group.
+Therefore, we allowed all analytical parameters to vary between the Wuliuan, Drumian, and Guzhangian stages.
+We tested a model in which the Drumian stage is split into two stages, for a total of four skyline categories (Wuliuan, Drumian 1, Drumian 2, Guzhangian).
+We also tested one in which there are two categories Wuliuan \& Drumian 1 and Drumian 2 \& Guzhangian. 
+For all competed models, the best-fit character change model and clock model were used as the other model subcomponents.
+A table of competed models can be seen in Table X and Fig. 1.
+
+
+Refs to add to .bib:
+
+Drummond, A. J., S. Y. W. Ho, M. J. Phillips, and A. Rambaut.  2006.  Relaxed phylogenetics and dating with confidence.  PLoS Biol 4:e88. 
+Felsenstein, J.  1981.  Evolutionary trees from DNA sequences: a maximum likelihood approach.  Journal of Molecular Evolution 17:368 – 376. 
+Foote, M.  1997.  Estimating taxonomic durations and preservation probability.  Paleobiology 23:278 – 300.
+Harvey, P. H., and M. D. Pagel.  1991.  The comparative method in evolutionary biology.  Oxford Press, Oxford.   
+Hasegawa, M., H. Kishino, and T.-a. Yano.  1985.  Dating of the human-ape splitting by a molecular clock of mitochondrial DNA.  Journal of Molecular Evolution 22:160-174. 
+Huelsenbeck, J. P., B. Larget, and D. Swofford.  2000.  A compound Poisson Process for relaxing the molecular clock.  Genetics 154:1879 – 1892. 
+McShea, D. W.  1994.  Mechanisms of large–scale evolutionary trends.  Evolution 48:1747 – 1763.
+Raup, D. M., and S. J. Gould.  1974.  Stochastic simulation and evolution of morphology – towards a nomothetic paleontology.  Systematic Zoology 23:305 – 322. 
+Sanderson, M. J.  2002.  Estimating absolute rates of molecular evolution and divergence times: a penalized likelihood approach.  Molecular Biology and Evolution 19:101 – 109. 
+Stanley, S. M.  1975.  A theory of evolution above the species level.  Proceedings of the National Academy of Sciences, USA 276:56 – 76. 
+Valentine, J. W.  1969.  Patterns of taxonomic and ecological structure of the shelf benthos during Phanerozoic time.  Palaeontology 12:684 – 709. 
+————————.  1980.  Determinants of diversity in higher taxonomic categories.  Paleobiology 6:444 – 450. 
+Wright, A. M., G. T. Lloyd, and D. M. Hillis.  2016.  Modeling character change heterogeneity in phylogenetic analyses of morphology through the use of priors.  Systematic Biology 65:602 – 611.
+
+
+\bibliography{refs} 
+\bibliographystyle{natbib}
+\end{document}
