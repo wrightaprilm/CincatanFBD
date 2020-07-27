@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{natbib}
+\usepackage[round]{natbib}
 \usepackage{xcolor}
 
 \newcommand{\amw}[1]{{\textcolor{ForestGreen}{AW: #1}}} % %edit
@@ -15,31 +15,46 @@
 
 \maketitle
 
+\section{Abstract}
+
+Macroevolutionary inference has historically been treated as a two-step process, involving the inference of a phylogenetic tree, and then inference of a macroevolutionary model using that tree.
+Newer models, such as the fossilized birth-death model, blend the two steps.
+These methods make more complete use of fossils than the previous generation of Bayesian phylogenetic models.
+They also involve many more parameters than prior models, including parameters about which empiricists may have little intuition.
+In this manuscript, we set forth a framework for fitting complex, hierarchical models.
+We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny for the Cinctans.
+While the tree of Cinctans remains poorly-supported in many places, the new tree raises interesting questions about how incorporating age information is expected to affect a phylogeny.
 
 \section{Introduction}
 
+Historically, drawing macroevolutionary inferences from phylogenetic trees has been a two-step process.
+First, a researcher would estimate a phylogenetic tree from a matrix of phylogenetic characters.
+Then, they would use that tree (or a set of trees, such as a posterior sample) to fit a macroevolutionary model.
+Over the past decade, models that blend macroevolutionary inference with phylogenetic inference have become increasing common.
+For example, the fossilized birth-death process is used to estimate dated phylognetic trees.
+This process is usually implemented as a Bayesian hierarchical model, in which one model describes the evoluation of the phylogenetic characters, one describes the distribution of evolutionary rates over the tree, and one describes the process of speciation, extinction, and sampling that lead to the observed tree.
+In this manuscript, we describe an approach to fitting complex hierarchical models, using a dataset of Cambrian Cinctans as a focal dataset.
+
 We can divide macroevolutionary hypotheses into two non-mutually exclusive groups: those making predictions about origination and extinction dynamics, and those making predictions about rates and modes of anatomical change. 
 The latter group includes hypotheses about shifts in rates of anatomical change and hypotheses about driven trends in which particular character states become more (or less) common over time.  
-Hypotheses predicting such pattern come both from macroecological theory and from evolutionary‑developmental theory, and thus span a range of basic issues including developmental, ecological, and physical constraints, and selection (Valentine 1969, 1980). 
+Hypotheses predicting such patterns come both from macroecological theory and from evolutionary‑developmental theory, and thus span a range of basic issues including developmental, ecological, and physical constraints, and selection  \citep{valentine1969patterns, valentine1980determinants}
 Research programs dedicated to assessing shifts in rates and modes of anatomical evolution have been staple of quantitative paleobiology since the early 1990’s. 
-Accordingly, anatomical character evolution models that describe the predictions of these different macroevolutionary hypotheses have important theoretical implications for these endeavors. %\amw{I'm not sure what this sentence means}
+Accordingly, anatomical character evolution models that describe the predictions of these different macroevolutionary hypotheses have important theoretical implications for these endeavors. 
 
 Phylogeneticists have long been interested in the same sorts of character evolution models, albeit for very different reasons.  
-Hypotheses of phylogenetic relationships make exact predictions about character state evolution among taxa given observed data and models of character change (e.g., Felsenstein 1981).  
-Common phylogenetic models make the assumption of time-invariant models with no biases in the rate of character acquisition and loss.
-However, the expectations of character evolution, of associations of characters with one another, and disparities between taxa are very different when rates of acquisition and loss very among characters and with time.
-This is particularly true when we include divergence times as part of phylogenetic hypotheses (Huelsenbeck et al. 2000; Sanderson 2002; Drummond et al. 2006): but it is still true if we worry only about general cladistic relationships (i.e., which taxa are most closely related to each other; Felsenstein 1981; Hasegawa et al. 1985; Wright et al. 2016).  
+Hypotheses of phylogenetic relationships make exact predictions about character state evolution among taxa given observed data and models of character change (e.g., \cite{Kimura1980, Felsenstein1981, Hasegawa1985, Tavare1986}).  
+The most common phylogenetic model for morphology makes the assumption of time-invariant models with no biases in the rate of character acquisition and loss \citep{Lewis2001}.
+The expectations of character evolution, of associations of characters with one another, and disparities between taxa are very different when rates of acquisition and loss very among characters and with time.
+This is particularly true when we include divergence times as part of phylogenetic hypotheses \citep{Huelsenbeck2000a, Sanderson2002, Drummond2006}): but it is still true if we worry only about general cladistic relationships (i.e., which taxa are most closely related to each other; see \cite{Felsenstein1981, Nylander2004, Wright2016}).  
 In other words, many of the conceptual mice that paleobiologists seek to capture are the conceptual mouse-traps that systematists seek to use to capture phylogenetics.  
 
 Many readers’ first instincts will be that this presents paleobiological phylogeneticists with a quandary: which comes first, the character evolution models or the phylogenetic inference?  
-This is particularly true because one of the reasons why paleobiologists often choose particular clades for phylogenetic analyses is that the taxon represents an appropriate system for assessing alternative hypotheses about macroevolutionary dynamics, including those positing different types of character evolution models.  
-For example, our alternate ideas for explaining early bursts of disparity (e.g., declining rates of change vs. limited character space; see Foote 1997) or active trends (e.g., driven trends [= biased state change] vs. species selection or phylogenetic effects; see Raup and Gould 1974; Stanley 1975; McShea 1994) correspond to different models of character evolution in phylogenetic analyses. 
-Moreover, such hypotheses apply to many or all of the characters available to paleontologists for study, there usually no recourse to “independent” character data for phylogenetic analysis such as was commonly prescribed for tree‑based macroevolutionary studies (e.g., Harvey and Pagel 1991).
-
+%This is particularly true because one of the reasons why paleobiologists often choose particular clades for phylogenetic analyses is that the taxon represents an appropriate system for assessing alternative hypotheses about macroevolutionary dynamics, including those positing different types of character evolution models.  
+%For example, our alternate ideas for explaining early bursts of disparity (e.g., declining rates of change vs. limited character space; see Foote 1997) or active trends (e.g., driven trends [= biased state change] vs. species selection or phylogenetic effects; see \cite{raup1974, stanley1975; mcshea1994}) correspond to different models of character evolution in phylogenetic analyses. 
+%Moreover, such hypotheses apply to many or all of the characters available to paleontologists for study, there usually no recourse to “independent” character data for phylogenetic analysis such as was commonly prescribed for tree‑based macroevolutionary studies (e.g., Harvey and Pagel 1991).
 %Another way to look at this is the Catch-22 that might arise if we were to submit a paper about phylogenetic relationships to a journal such as Journal of Paleontology and a paper about a macroevolutionary issue such as shifts in rates of anatomical change to a journal such as Paleobiology with both papers using the same data set.  
 %For the phylogeny paper, we (should!) need to convince reviewers and editors that the models of character change are sufficiently complex that we can trust the resulting phylogeny. For the rate-shift paper, we (should!) need to convince reviewers and editors that the null hypotheses, i.e., continuous rates of change over time (i.e., strict clocks) are inadequate before rejecting them in favor of the more complex idea that rates changed over time.  In other words, our burdens of proof run in opposite directions even though we actually are discussing the same sets of evolutionary parameters and simply putting more emphasis on one set or another.  
-
-Part of the dilemma here stems from a historical view that we should treat phylogenetic analysis and macroevolutionary analysis as two separate endeavors (e.g., Harvey and Pagel 1991).  
+Part of the dilemma here stems from a historical view that we should treat phylogenetic analysis and macroevolutionary analysis as two separate endeavors (e.g., \cite{Harvey1991}).  
 When we estimate a phylogenetic tree, we typically need to make simplifying assumptions.
 For our comparative methods, we are often exploring more complex models, possibly even seeking to falsify those same simplifying assumptions.
 Here, we advocate a very different approach that stems from hierarchical Bayesian phylogenetic approaches.  
@@ -57,7 +72,7 @@ Finally, we will briefly outline other theoretical and methodological areas that
 
 Cinctans are a particularly interesting clade for this analysis.
 Many look like strange pancakes (see: https://www.youtube.com/watch?v=oHg5SJYRHA0).
-
+\textbf{Davey}.
 
 \section{Methods}
 
@@ -66,20 +81,20 @@ Below, we describe a hierarchical approach to model-fitting, in which we fit a m
 The model subcomponents are then assembled into a total fossilized birth-death process.
 
 For each model subcomponent, we first ran an MCMC in RevBayes to assess how long it takes for the analysis to reach convergence. 
-Then, using this value, we ran 20 steppingstone replicates to calculate a marginal likelihood for the data.
+Then, using this value, we ran 20 stepping-stone replicates to calculate a marginal likelihood for the data.
 Stepping-stone model fitting samples iteratively in the space between the prior and the posterior.
-The aim in doing this is to estimate the probability of the data summed over all possible values for parameters. 
-This enables the calculation of an unbiased marginal likelihood, in contrast to MCMC, which will be biased towards regions of good solutions. 
+The aim in doing this is to estimate the probability of the data summed over all possible values for parameters  \citep{Xie2011}. 
+This enables the calculation of an unbiased marginal likelihood, in contrast to MCMC, which will be biased towards regions of treespace that contain good solutions. 
 
-The result of each stepping-stone analysis will be a marginal likelihood.
+The result of each stepping-stone analysis is a marginal likelihood.
 Because phylogenetic likelihoods tend to be quite small, they are typically reported as log-transformed values.
-This means that for model comparisons, we used the log Bayes Factor, which is represented by the character \textit{K}, and given via the formula:
+This means that for model comparisons, we used the log Bayes Factor \citep{Kass1995}, which is represented by the character \textit{K}, and given via the formula:
 
 \begin{center}
   \[  \textit{K}=ln[BF(M0,M1)]=ln[P(X \textbar M0)] - ln[P(X \textbar M1)],  \]
 \end{center}    
     
-In the above eqaution, the Bayes Factor for model comparison between Model 0 and model 1 is equal to the probability of model 0 minus model 1. The final Bayes Factor is calculated by exponetiating \textit{K}:
+In the above eqaution, the Bayes Factor for model comparison between Model 0 and model 1 is equal to the probability of model 0 minus model 1. The final Bayes Factor is calculated by exponentiating \textit{K}:
 
 \begin{center}
   \[  BF(M0,M1)=\textit{e}^\textit{K} \]
@@ -91,68 +106,275 @@ The final Bayes Factor is a single value for which a value greater than one cons
 The winning candidate model for each subcomponent was then used to estimate the subsequent FBD trees.
 
 \subsection{Morphological Evolution Models}
-
-We compared two models for morphological character evolution. 
-Both were based on the basic Mk model \citep{Lewis2001}. 
+We first fit a morphological character model, as no tree can be estimated without one.
+We compared three models for morphological character evolution. 
+All three were based on the basic Mk model \citep{Lewis2001}. 
 In this model, it is assumed that any character has an equal probability change and reversal between any two states. 
-The data matrix was partitioned according to the number of character states, so that the transition matrix of the model was correctly specified.
-We used Gamma-distributed rate heterogeneity to allow different characters in the matrix to have different evolutionary rates.
-Our first model is exactly as described above. 
-In the second model, data were partitioned into feeding and non-feeding characters.
-Then the above model was applied.
-In effect, the second model has two times as many parameters as the first, one for each set of characters.
+The data matrix was partitioned according to the number of character states, so that size of the transition matrix of the model was correctly specified.
+In the first model, we did not allow rate heterogeneity. 
+In effect, this means we assume all characters to have the same rate of evolution.
+In the second, used Gamma-distributed rate heterogeneity to allow different characters in the matrix to have different evolutionary rates.
+In the third model, data were partitioned into feeding and non-feeding characters.
+Then the above model was applied in each partition. \textbf{PETE: is there a citation that supports the idea that these two sets of characters might evolve differently?}
+In effect, the third model has two times as many parameters as the first, one set for each set of characters.
 
-Convergence was reached after about 80,000 generations, as checked by eye in the software Tracer \citep{Rambaut2018}. 
+Convergence was reached after about 80,000 generations, as checked in the software Tracer \citep{Rambaut2018}. 
+Stepping stones should generally be run to approximate convergence per stone.
 Therefore, each stepping stone was run for 100,000 generations to account for any late-converging stones.
 
 \subsection{Clock Models}
 
 A phylogeny cannot be estimated without a model of character evolution. 
-Hence, the morphology model was estimated first.
+Hence, the morphology model was fit first.
 Next, we fit a clock model. 
 In order to do this, we used out best-fit morphology model and a simple, time-homogeneous FBD model to compete different clock models against one another.
 The four candidate clock models were as follows.
 \begin{itemize}
-    \item A strict clock: In this model, all branch rates are assumed to be equal. The rate of evolutionary change is sampled from an exponential distribution. The strict clock model is most simple clock model. It assumes that all branches follow a single, constant rate of morphological evolution. Although simplistic, some studies have found surprising degree of concordance with fossil data fitting a strict morphological clock even when models incorporating rate variation provide a better statistical fit (Wright, 2017, Drummond and Stadler, 2016). The strict clock model has one advantage in its simplicity: it adds only one parameter to the analyses, whereas relaxed clock models require many additional parameters.
-    \item An uncorrelated lognormal clock: This clock treats each branch as an independent draw from a distribution.  In this case, we used a lognormal distribution, which says most evolutionary rates are likely to be low, but with allowances for some branches to have very high rates. It should be noted that because each branch is a separate draw, the rate of an ancestral branch's evolution may be very different than its descendants - either greater or lesser.
-    \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor. This will favor smaller rate shifts than those seen in an uncorrelated clock. We modeled the distributions per branch as lognormal.
-    \item Early Burst: This clock models rates of evolution as exponentially decaying over time. This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. Prior analyses have indicated that there may be an early burst of diversification in this clade.
+    \item A strict clock: In this model, the rate of evolution along each branch is assumed to be equal. The rate of evolutionary change is sampled from an exponential distribution. 
+    The strict clock model is most simple clock model. 
+    It assumes that all branches follow a single, constant rate of morphological evolution. 
+    Although simplistic, some studies have found surprising degree of concordance with fossil data fitting a strict morphological clock even when models incorporating rate variation provide a better statistical fit (Wright, 2017, Drummond and Stadler, 2016). 
+    The strict clock model has one advantage in its simplicity: it adds only one parameter to the analyses, whereas relaxed clock models require many additional parameters.
+    \item An uncorrelated lognormal clock: This clock treats each branch as an independent draw from a distribution.  
+    In this case, we used a lognormal distribution, which says most evolutionary rates are likely to be low, but with allowances for some branches to have very high rates. 
+    It should be noted that because each branch is a separate draw, the rate of an ancestral branch's evolution may be very different than its descendants - either greater or lesser.
+    \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor. 
+    This will favor smaller rate shifts than those seen in an uncorrelated clock. We modeled the distributions per branch as lognormal.
+    \item Early Burst: This clock models rates of evolution as exponentially decaying over time. 
+    This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. Prior analyses have indicated that there may be an early burst of diversification in this clade. \citep{Pete, was this your idea?}
 \end{itemize}
 
 Each of these models has a different number of parameters and took a different amount of time to converge. Therefore, for each model, we first ran an exploratory MCMC to see how long convergence takes. Then we used the convergence value to choose the number of iterations per stepping stone.
-A table of competed models can be seen in table X.
+A table of competed models can be seen in Figure 1.
 
 \subsection{Tree Models}
 
-In all of our comparisons of tree models, we used variants of the fossilized birth-death model.
-The first FBD model is a time-homogeneous model in which it is assumed that one rate of speciation, extinction, fossil sampling and sampling at the last occurrence time apply to the whole tree.
-The other models competed are skyline models.
+In all of our comparisons of tree models, we used variants of the fossilized birth-death model. 
+We competed several models, reflecting different scenarios of diversification and sampling in the group.
+Several models competed are termed skyline models.
+It should be noted that for all skyline models, there is an additional interval of time from the origin to the first interval.
 These models assume that the parameters of the FBD analysis can vary between discrete time bins.
 For Cintans, previous authors have observed what appears to be an early burst of evolutionary diversity in the group.
 Therefore, we allowed all analytical parameters to vary between the Wuliuan, Drumian, and Guzhangian stages.
-We tested a model in which the Drumian stage is split into two stages, for a total of four skyline categories (Wuliuan, Drumian 1, Drumian 2, Guzhangian).
-We also tested one in which there are two categories Wuliuan \& Drumian 1 and Drumian 2 \& Guzhangian. 
+
+\begin{itemize}
+\item Time-homogeneous: The first FBD model is a time-homogeneous model in which it is assumed that one rate of speciation, extinction, fossil sampling and sampling at the last occurrence time apply to the whole tree. 
+\item Two intervals: We tested a model in which the Drumian stage is split into two stages, for a total of two skyline categories (Wuliuan \& Drumian 1, Drumian 2 \& Guzhangian).
+\item Three intervals: We tested a model in which each stage is given its own set of FBD parameters, for a total of three skyline categories.
+\item Six intervals: In this model, each geological stage was broken into two intervals.
+\end{itemize}
 For all competed models, the best-fit character change model and clock model were used as the other model subcomponents.
-A table of competed models can be seen in Table X and Fig. 1.
+
+\section{Results}
+
+\subsection{Model fitting}
+
+Model selection supported the choice of substitution model with feeding and non-feeding characters (posterior probability: -467.053) modeled separately (log Bayes Factor: -1.078; substantial evidence).
+An uncorrelated lognormal clock (posterior probability: -550.311) was favored over an autocorrelated clock (posterior probability: -680.797) or a strict clock (posterior probability: -555.3404) with a log Bayes Factor of 1.562 (substantial evidence).
+Finally, the three-time interval model (posterior probability: -490.9737) was supported over the two-interval (-863.8532) and six-interval (-761.7888) models. 
+Parameters of the FBD model can be seen on Table 1.
+
+\subsection{Cinctan phylogeny}
+
+As expected, \textit{Cetnocystis} is sister to the Cinctans. 
+\textit{Protocinctus}, which has been recovered in some recent studies as nested deep within the Cinctans is recovered here as sister to the rest of the clade. 
+\textit{Gyrocystis} is a monophyletic clade, with several sampled ancestors within the clade. 
+However, \textit{Progyrocystis} appears in a clade with \textit{Asturicystis and Graciacystis}. 
+This clade is sister to the \textit{Gyrocystis} clade, albeit with poor posterior support. 
+\textit{Trochocystoides} and \textit{Trochocystites} are nested deeper in the tree than in prior analyses.
+The \textit{Sucocystis}, \textit{Lignanicystis} and \textit{Ellipticintus} grouping persists, though in this analysis \textit{Sucocystic acrofora} groups with the \textit{Undatacinctus}-\textit{Ludwigicinctus} clade.
+The HPD on the age of the origin of the group was -505.365 and 507.724 mya.
 
 
-Refs to add to .bib:
 
-Drummond, A. J., S. Y. W. Ho, M. J. Phillips, and A. Rambaut.  2006.  Relaxed phylogenetics and dating with confidence.  PLoS Biol 4:e88. 
-Felsenstein, J.  1981.  Evolutionary trees from DNA sequences: a maximum likelihood approach.  Journal of Molecular Evolution 17:368 – 376. 
-Foote, M.  1997.  Estimating taxonomic durations and preservation probability.  Paleobiology 23:278 – 300.
-Harvey, P. H., and M. D. Pagel.  1991.  The comparative method in evolutionary biology.  Oxford Press, Oxford.   
-Hasegawa, M., H. Kishino, and T.-a. Yano.  1985.  Dating of the human-ape splitting by a molecular clock of mitochondrial DNA.  Journal of Molecular Evolution 22:160-174. 
-Huelsenbeck, J. P., B. Larget, and D. Swofford.  2000.  A compound Poisson Process for relaxing the molecular clock.  Genetics 154:1879 – 1892. 
-McShea, D. W.  1994.  Mechanisms of large–scale evolutionary trends.  Evolution 48:1747 – 1763.
-Raup, D. M., and S. J. Gould.  1974.  Stochastic simulation and evolution of morphology – towards a nomothetic paleontology.  Systematic Zoology 23:305 – 322. 
-Sanderson, M. J.  2002.  Estimating absolute rates of molecular evolution and divergence times: a penalized likelihood approach.  Molecular Biology and Evolution 19:101 – 109. 
-Stanley, S. M.  1975.  A theory of evolution above the species level.  Proceedings of the National Academy of Sciences, USA 276:56 – 76. 
-Valentine, J. W.  1969.  Patterns of taxonomic and ecological structure of the shelf benthos during Phanerozoic time.  Palaeontology 12:684 – 709. 
-————————.  1980.  Determinants of diversity in higher taxonomic categories.  Paleobiology 6:444 – 450. 
-Wright, A. M., G. T. Lloyd, and D. M. Hillis.  2016.  Modeling character change heterogeneity in phylogenetic analyses of morphology through the use of priors.  Systematic Biology 65:602 – 611.
+\begin{table}[]
+\caption{Diversification parameters of the FBD model. These parameters are the median parameter values for the best-fit model, the model in which each geological stage has its own speciation, extinction and fossil sampling parameters.}
+\begin{tabular}{l|lll}
+Stage      & \begin{tabular}[c]{@{}l@{}}Fossil \\ Sampling \\ Rate\end{tabular} & Diversification & Turnover \\ \hline
+Guzhangian & 0.188                                                              & -0.193          & 2.148    \\
+Drumian    & 0.260                                                              & 0.317           & 0.714    \\
+Wuliuan    & 0.224                                                              & -2.657          & 4.936   
+\end{tabular}
+\end{table}
+
+
+\section{Discussion}
+
+\subsection{Model-fitting for complex hierarchical models}
+
+When the fossilized birth-death model was first implemented for divergence time estimation, one of the noted benefits was avoiding incoherent fossil calibration points on nodes \citep{Heath2014}.
+``Incoherent'' in this argument is meant in two ways: first, that fossils are not data under node calibration methods.
+In a node calibration framework, fossils constrain the possible ages a split can have.
+The fossils are not data under this framework (Wright and Warnock 2020). 
+The researcher parameterizes what they believe to be the waiting time between the divergence and this fossil subtending it. 
+This waiting time is capturing two different quantities - the uncertainty around the age of the fossil and how long since the divergence it took to arise.
+In practice, choice of prior is often subjective, and not based on any one criterion or method, though methods for doing this do exist \citep{Nowak2013}.
+
+The second way in which this practice can result in incoherence is through the collision of priors on different nodes.
+and depending on the shape of the prior chosen, can cause the upper age bound of an ancestor to conflict with the lower age bound of its descendants. 
+For example, if a researcher has little intuition for when a fossil arose in relation to the split that it subtends, they may place a uniform distribution between the longest and shortest the branch(es) between the fossil and the split may be.
+Imagine this split and fossil are the descendants of an earlier node, which also has a fossil associated with it. 
+Perhaps the researcher has an intuition that this fossil is likely close to its ancestor node. 
+And so the researcher places a lognormal prior on the fossil waiting time, saying the fossil is likely close to the node, but allowing for it to possibly be much younger. 
+If incorrectly parameterized, the upper bound of the lognormal could overlap the lower bound of the uniform, implying in those cases that the descendant split could occur before the ancestor split.
+
+This is obviously undesireable.
+The fossilized birth-death model does not use node calibrations, instead parameterizing the uncertainty of each tip.
+This is done by placing a uniform prior on each fossil tip that begins with the first occurrence of the fossil and ends with the last occurrence. 
+For some taxa, this will mean a fairly wide uncertainty per tip.
+Insect occurrences are often dated based on the type of amber they were found in.
+Some ambers can be precisely dated, as the trees that generate the amber has a narrow range.
+For others, the range of dates might be quite broad as the amber type could be made from multiple trees, or in tree types with long geological persistences. 
+In fossils that have been individually dated, this uncertainty may correspond to the uncertainty on the radiometric dating.
+Regardless of the manner in which the uncertainty is derived, the meaning is clear and singular: the uncertainty on a fossil tip represents the minimum and maximum plausible age of the fossil.
+This is a far clearer quantity to describe than uncertainty on a fossil, plus the waiting time between the fossil and the speciation that generated it. 
+
+However, the fossilized birth-death model still contains parameters for which it may be difficult to choose parameters.
+It is generally known that a small proportion of life that has ever existed has fossilized. 
+But what should the fossilization rate in any particular clade be?
+Should it change over time? 
+Model selection has long been considered an important part of phylogenetic inference.
+But in the absence of easy to use selection software, has not been as widely used in other areas systematic research.
+Here, we have used heirarchical model selection to fit a model for each of the FBD's component submodels.
+For each subcomponent, we competed plausible models.
+The winning models were combined into a final analysis.
+Using stepping-stone model estimation, we were able to calculate precise model likelihoods and use them to compare models using the log Bayes Factor.
+
+While this methodology is computationally intensive, it was also tractable. 
+Because no time tree can be inferred without the means to infer a tree first, we first chose our model of morphological evolution.
+This is also the least computationally-intense part of the estimation, and can be completed in a few hours.
+Using this model, we then chose a clock model, testing four different models (see the next section for a discussion of these models).
+Finally, using our morphological evolution and clock models, we competed several versions of the FBD model, including three skyline models.
+Scoring a precise marginal likelihood for the total tripartite model is the most computationally intensive part of the work. 
+By saving this for last, and first fitting the less parameter-rich morphological evolution and clock models, this estimation is made far more tractable for an average researcher to conduct on a laptop or desktop computer. 
+
+
+
+\subsection{What does the chosen set of models tell us?}
+
+Being able to fit a model doesn't mean that fitting that model tells us anything about biology. 
+Ideally, we will use our knowledge of the system to turn that model fit into knowledge. 
+As shown on Fig. 1, we competed several different models of morphological evolution, clock rate distribution across the tree, and the tree model. 
+Each of these models and parameters has meaning in terms of evolution. 
+As biological or geological interpretation of phylogenetic model may not be intuitive to geologist readers, we will now examine what we have learned about evolution from this exercise.
+
+The model of morphological evolution is intended to capture how the phylogenetic characters have evolved over time.
+It is the chief source of information about the topology.
+The models of morphological evolution we used were all based on the Mk model \citep{Lewis2001}. 
+In this model, it is assumed that characters can be in any one of \textit{k} known character states, that each character can change instantly along a branch, and that probability of change between any two states is equiprobable.
+As shown on Fig. 1, among-character rate variation fits the dataset better than a single rate of evolution across a dataset.
+This is somewhat unsuprising, as most work in this group has been conducted under parsimony, a model which assumes each character has its own rate of evolution.
+We also investigated partitioning in this dataset.
+Prior work had suggested that feeding and non-feeding characters may reflect separate patterns of evolution \textbf{Pete, ref for this?}.
+We find strong support for this hypothesis.
+
+We examined four clock models.
+The first was a strict clock. 
+These types of clocks are not supported often in molecular systematics.
+Molecular evolution rates are impacted by generation times,  metabolic rate, and mutation rate.
+How this translates to rates of morphological evolution over time is not as well-studied, but all the above facotrs impact the body form an organism has.
+Therefore, the lack of support for a strict clock in our data (Fig. 1) is unsurprising.
+
+The remaining three clock models describe more biologically interesting scenarios.
+An autocorrelated clock model implies that a descendant branch will have a rate of evolution that is realted to the rate of evolution of its ancestor.
+This is an appealing model, as we would expect that life history traits may accumulate variation slowly, and be similar to their ancestors. 
+We also examined an early burst model, in which the rate of evolution slows over time.
+This, too, is an interesting biological hypothesis that is testable given our data.
+However, both models were less well-supported than the uncorrelated lognormal clock,
+a model in which large changes in rates of evolution can be seen among ancestor-descendent pairs.
+It should be noted that while more flexible in terms of the rate variation allowed between ancestors and descendents, the uncorrelated lognormal is not necessarily the most complex model parametrically. 
+The strength of support for the most flexible model suggests that perhaps there is a substantial amount of variation that is not being currently captured by our current generations of clock models.
+There may be a universe of models awaiting description that could tap into this need.
+
+The final model subcomponent is the tree model.
+We were able to easily reject a time-homogeneous FBD model in which one rate of speciation, extinction, and fossil sampling applies across the whole tree.
+The entirety of the tree is only a 12 million year span of evolutionary history.
+Being able to reject one model over a relatively small amount of time implies that variable-rate models might be appropriate for a great many systems.
+The cinctans appeared in a three-stage slice of the Miaolingian Series. 
+One competed model looked at having the Wuliuan, Drumian, and Guzhangian stages having different sets of FBD parameters. 
+Another was  a two-stage model in which time was split down the middle in the Drumian.
+And a third, most complex model in which each stage was split into two intervals was also examined. 
+It is worth noting that discriminate power between these models was fairly good, and that the most complex model was not simply chosen.
+The three-stage model fit best, followed by the strict clock, seven-stage model, and finally the two-stage model. 
+This is somewhat comforting: if the most complex model had been chosen for each component model, one would wonder if we were not simply choosing from a candidate set of under parameterized models. 
+The Bayes Factor is a reasonably conservative test, and did reject more parameter-rich models in favor of simpler ones.
+
+Together, these models paint a picture of evolution in which trophically-important characters evolve according to different mechanisms than non-trophic characters.
+We see a world in which at times of notable transitions of the Earth (geological stages), we see change in the fundamental processes of diversification and sampling.
+And we come to understand that from ancestor to descendant, different life history pressures lead to changes in the rate at which evolutionary change accumulates. 
+These first forays into hierarchical model fitting call attention to notable pieces, such as the clock model, where we may be able to examine sources of heterogeneity and improve our models even further.
+
+\subsection{What did we learn about Cinctans specifically from the tree + model}
+
+The origin time of the Cinctan-\textit{Ctenocystis} group was 507.52 mya (HPD 505.808 - 508.11 mya), with the ingroup originating at 505.747 mya (HPD 507.27 - 504.699 mya).
+Each tip has uncertainty associated with it.
+The range of this uncertainty is bounded by ... \textbf{Pete! how did we calc this biz?}.
+In RevBayes, tip uncertainty is typically treated as a uniform prior between the first and last appearance on the tip taxon.
+The uniform prior says that no age within the bounds is \textit{a priori} more likely than any other.
+Nonetheless, we do see significant structure in the distributions for each tip (Fig. S1). 
+Some tips, such as \textit{Ctenocystis} and \textit{Elliptocinctus vizcainoi} show strong skew towards the older or younger ages within their uniform tip range.
+Others, such as \textit{Asturicystis jaekeli} show less signal, retrieiving more-or-less the input uniform prior.
+This suggests that FBD analyses may be useful in the future for helping to narrow tip age ranges.
+In clades such as insects where tip uncertainty tends to be quite high as many tips are found in imprecisely-dated amber, this could be an analytical path to higher precision on tip ages.
+
+The topology of the tree is fully-resolved but poorly-supported on many nodes.
+The tree in Fig. 1 displays the width of the branch scaled by the posterior support.
+As can be seen on that figure, the posterior probability of many nodes is quite poor. 
+This is unsurprising, as bootstrap support values in prior work (cite Zamora) have also been poor.
+The placement of \textit{Protocinctus} is interesting on this phylogeny. 
+It is the oldest cinctan, however, it possesses some derived characters and has been argued (cite Rahman 2009) to be deeper within the Cintan tree, which prior phylogenetic work has supported (Rahman 2013). 
+The placement of \textit{Protocinctus} as sister to the rest of the cinctans is likely not solely due to the age of the fossil. This fossil is younger than its parent's next several ancestor nodes, meaning it could have been plausibly placed deeper within the Cinctan clade, but was not. 
+The split between \textit{Protocinctus} and the rest of the Cinctans is also one of the most well-supported nodes on this tree.
+
+In the in-group topology, \textit{Asturicystis}, \textit{Progyrocystis}, and \textit{Graciacystis} form a weakly-supported clade that is sister to the rest of the \textit{Gyrocystis}.
+\textit{Trochocystoides} and \textit{Trochocystites} do not form a monophyletic grouping. 
+Our phylogeny also reflects a closer relationship between \textit{Undatacinctus} and \textit{Ludwigicintus}. 
+Neither \textit{Elliptocinctus} nor \textit{Sucocystis} are monophyletic in this analysis.
+Some of these differences may represent differences between the model applied here and in previous work.
+We used the Mk model \citep{Lewis2001}, which is more robust to superimposed or homoplasious changes than parsimony \citep{Felsenstein1978, Wright2014}.
+
+But differences may also reflect the inclusion of date information.
+For example, \textit{Elliptocinctus} is a genus with two species on this tree. 
+Prior analyses have reflected these as monophyletic.
+We did not recover these as monophyletic, with \textit{Elliptocinctus barrandei} descending from a node that is 501.865 years old (age HPD 500.326 - 503.626).
+This node is younger than the earliest appearance of \textit{Elliptocinctus vizcainoi}.
+In order for these two taxa to be monophyletic, the strength of evidence in the character data would have to be strong enough to either move \textit{Elliptocinctus vizcainoi} into that grouping (which is a canonical position for the \textit{Elliptocinctus}), thereby moving the age of the whole group back several million years, or would have to move \textit{Elliptocinctus barrandei} out of it.
+The Cinctans have notable homoplasy in the group and a small amount of characters.
+Fossil age information is treated as data under the FBD model, which has historically not been true of calibration methods, in which fossil age information was used to set constraints on clade ages.
+This means that the age information does not directly constrain the topology, but does still affect the distribution of topologies that are plausible given those ages. 
+It will be worth further exploration to find out when we expect age information to exert a stronger influence than character information in determining a dated tree.
+
+Interestingly, \textit{Gyrocystis} has a number of sampled ancestors in the genus. In this genus, there are a total of three sampled ancestors, one pair of which (\textit{G. erecta} and \textit{G. badulesiensis}) likely represent budding speciation.
+Its sister group also has one, which may also represent budding.
+Sampled ancestors in this group are somewhat unsurprising as both turnover (2.138) and fossil sampling (0.188) are relatively high in the time interval in which the taxa occur (Table 1). 
+Conditions of high turnover should facilitate the evolution of ancestors that don't sit on their own branch, as there is high loss of branches per formation of a branch.
+The elevated fossil sampling then makes these ancestors discoverable by human observers. 
+There is still a paucity of empirical literature of when sampled ancestors are expected in natural conditions.
+The Cinctans have many characteristics that make discovery of sampled ancestors relatively probable: the group occurs over a small window of time, allowing for the assessment of taxonomic completeness, they are marine, allowing for better fossilizaton than many terrestrial vertebrates, and they are small, allowing for scoring characters from relatively complete specimens.
+In this way, Cinctans may represent a sort of best case for calculating sampled ancestor probabilities.
+Our results demonstrate that for Cinctans, and other similar taxa, the fossil record may contain many sampled ancestors.
+
+\section{Conclusion}
+
+In this manuscript, we have laid forth a framework for fitting complex, hierarchical models. 
+The fossilized birth-death represents a leap forward in terms of the integration of fossils in Bayesian phylogenetic analyses. 
+Under this model, fossils are data, not mere clade constraints.
+However, to leverage this fraemwork involves fitting several submodels to the particular dataset.
+In doing so, we also inferred a new dated phylogeny for the Cinctan group, and provide some insight as to how and why this phylogeny differs from prior work.
+We have highlighted several theoretical and empirical concerns, such as how age information impacts topology and how common sampled ancestors are in empirical datasets.
+It is our hope that in describing how such complex model fitting can be carried out in a tractable way, we will empower more empiricists to try the FBD model with their data.
+It is in the interplay between theoretical phylogenetics and deep taxonomic knowledge of empirical paleontologists that new models that address the peculiarities of any taxonomic group will arise.
+
+
+
 
 
 \bibliography{refs} 
-\bibliographystyle{natbib}
+\bibliographystyle{plainnat}
+
+
+
+
+
+
 \end{document}
