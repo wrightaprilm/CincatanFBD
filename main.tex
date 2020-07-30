@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[round]{natbib}
 \usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{caption}
 
 \newcommand{\amw}[1]{{\textcolor{ForestGreen}{AW: #1}}} % %edit
 
@@ -122,6 +124,13 @@ Convergence was reached after about 80,000 generations, as checked in the softwa
 Stepping stones should generally be run to approximate convergence per stone.
 Therefore, each stepping stone was run for 100,000 generations to account for any late-converging stones.
 
+\begin{figure*}
+  \includegraphics[width=\textwidth]{figures/Fig1.pdf}
+
+  \caption{A table of the competed models for each component of the FBD process. Underneath each model component are the models competed for that component. The model indicated in bold text is the one that fit the data best, per Bayes Factor model selection.}
+\end{figure*}
+
+
 \subsection{Clock Models}
 
 A phylogeny cannot be estimated without a model of character evolution. 
@@ -172,10 +181,11 @@ For all competed models, the best-fit character change model and clock model wer
 Model selection supported the choice of substitution model with feeding and non-feeding characters (posterior probability: -467.053) modeled separately (log Bayes Factor: -1.078; substantial evidence).
 An uncorrelated lognormal clock (posterior probability: -550.311) was favored over an autocorrelated clock (posterior probability: -680.797) or a strict clock (posterior probability: -555.3404) with a log Bayes Factor of 1.562 (substantial evidence).
 Finally, the three-time interval model (posterior probability: -490.9737) was supported over the two-interval (-863.8532) and six-interval (-761.7888) models. 
-Parameters of the FBD model can be seen on Table 1.
+Parameters of the best-fit FBD model can be seen on Table 1.
 
 \subsection{Cinctan phylogeny}
 
+The phylogeny estimated can be seen in Fig. 2.
 As expected, \textit{Cetnocystis} is sister to the Cinctans. 
 \textit{Protocinctus}, which has been recovered in some recent studies as nested deep within the Cinctans is recovered here as sister to the rest of the clade. 
 \textit{Gyrocystis} is a monophyletic clade, with several sampled ancestors within the clade. 
@@ -185,7 +195,11 @@ This clade is sister to the \textit{Gyrocystis} clade, albeit with poor posterio
 The \textit{Sucocystis}, \textit{Lignanicystis} and \textit{Ellipticintus} grouping persists, though in this analysis \textit{Sucocystic acrofora} groups with the \textit{Undatacinctus}-\textit{Ludwigicinctus} clade.
 The HPD on the age of the origin of the group was -505.365 and 507.724 mya.
 
+\begin{figure*}
+  \includegraphics[width=\textwidth]{figures/Pancakes over Time.pdf}
 
+  \caption{A dated phylogeny of the Cinctans. Branch widths are proportional to the posterior probability of the branch, with wider branches reflecting higher posterior probability. \textbf{Pete, fill in some other meanings here?}}
+\end{figure*}
 
 \begin{table}[]
 \caption{Diversification parameters of the FBD model. These parameters are the median parameter values for the best-fit model, the model in which each geological stage has its own speciation, extinction and fossil sampling parameters.}
@@ -272,11 +286,11 @@ We examined four clock models.
 The first was a strict clock. 
 These types of clocks are not supported often in molecular systematics.
 Molecular evolution rates are impacted by generation times,  metabolic rate, and mutation rate.
-How this translates to rates of morphological evolution over time is not as well-studied, but all the above facotrs impact the body form an organism has.
+How this translates to rates of morphological evolution over time is not as well-studied, but all the above factors impact the body form an organism has.
 Therefore, the lack of support for a strict clock in our data (Fig. 1) is unsurprising.
 
 The remaining three clock models describe more biologically interesting scenarios.
-An autocorrelated clock model implies that a descendant branch will have a rate of evolution that is realted to the rate of evolution of its ancestor.
+An autocorrelated clock model implies that a descendant branch will have a rate of evolution that is related to the rate of evolution of its ancestor.
 This is an appealing model, as we would expect that life history traits may accumulate variation slowly, and be similar to their ancestors. 
 We also examined an early burst model, in which the rate of evolution slows over time.
 This, too, is an interesting biological hypothesis that is testable given our data.
@@ -317,7 +331,7 @@ Others, such as \textit{Asturicystis jaekeli} show less signal, retrieiving more
 This suggests that FBD analyses may be useful in the future for helping to narrow tip age ranges.
 In clades such as insects where tip uncertainty tends to be quite high as many tips are found in imprecisely-dated amber, this could be an analytical path to higher precision on tip ages.
 
-The topology of the tree is fully-resolved but poorly-supported on many nodes.
+The topology of the tree is fully-resolved but poorly-supported on many nodes (Fig. 2).
 The tree in Fig. 1 displays the width of the branch scaled by the posterior support.
 As can be seen on that figure, the posterior probability of many nodes is quite poor. 
 This is unsurprising, as bootstrap support values in prior work (cite Zamora) have also been poor.
