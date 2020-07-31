@@ -24,8 +24,8 @@ Newer models, such as the fossilized birth-death model, blend the two steps.
 These methods make more complete use of fossils than the previous generation of Bayesian phylogenetic models.
 They also involve many more parameters than prior models, including parameters about which empiricists may have little intuition.
 In this manuscript, we set forth a framework for fitting complex, hierarchical models.
-We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny for the Cinctans.
-While the tree of Cinctans remains poorly-supported in many places, the new tree raises interesting questions about how incorporating age information is expected to affect a phylogeny.
+We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny the Cincta (Echinodermata).
+Although the tree of cinctan species remains poorly-supported in many places, our new phylogeny raises interesting questions about how incorporating age information is expected to affect a phylogeny provides a framework for future evolutionary analyses of this enigmatic echinoderm clade.
 
 \section{Introduction}
 
@@ -73,8 +73,62 @@ Because there are innumerable possible models that one might consider, we will d
 Finally, we will briefly outline other theoretical and methodological areas that remain for paleobiologists and systematists to resolve and unite in the future. 
 
 Cinctans are a particularly interesting clade for this analysis.
-Many look like strange pancakes (see: https://www.youtube.com/watch?v=oHg5SJYRHA0).
-\textbf{Davey}.
+Many look like strange pancakes 
+\subsection{Cinctan echinoderms}
+Echinoderms are a diverse phylum of marine animals represented today by more than 7,000 living species (Brusca and Brusca 2003) distributed among five classes, including sea stars, brittle stars, sea urchins sand dollars, sea cucumbers, and crinoids. However, the spectacular diversity of extant echinoderms, measured by both species richness and anatomical form, represents a diminutive fraction of their prodigious evolutionary history recorded in the fossil record. Because echinoderms possess an endoskeleton comprised of high-Mg calcite and exclusively marine distribution, the echinoderm fossil record is spectacularly complete and reveals approximately 30 clades distributed among 21 taxonomic classes spanning the entire Phanerozoic Eon (Sprinkle and Kier 1987). For example, unlike the familiar animals inhabiting modern oceans, Cambrian echinoderms comprise a taxonomically and morphologically diverse assemblage of predominately stem-group taxa exhibiting a diversity of body plans, life modes, and ecological traits unseen in extant lineages. 
+For example, More to come... 
+
+\section{Data}
+\subsection{Character Data}
+We use the character data initially published by Smith and Zamora (2009) and subsequently augmented by Zamora et al. (2013).  The analyzed matrix includes 22 cinctan species plus one outgroup (\textit{Ctenocystis}, represented by\textit{ Ctenocystis utahensis}). An additional four cinctan species are excluded due to inadequate material for coding.  We refer the readers to the papers cited above for additional information concerning the character data.
+
+\begin{figure*}
+  \includegraphics[width=\textwidth]{figures/Cinctan Disparity 3Ways Horizontal.pdf}
+
+  \caption{Figure 1. Disparity patterns for cinctans.  A. Disparity over time based on average pairwise dissimilarities among taxa (see Foote 1992).  Vertical bars represent 90 percent error bars from bootstrapping pairwise comparisons (Foote 1993).  Xs give disparity among standing richness only.  Circles give the cumulative disparity among all members of the clade at least as old as that point in time.  B) Rescaled standing disparity vs. log-taxonomic richness. Because cinctans begin with relatively high richness and then decline over time, the curve begins near the middle of the plot rather than near the bottom as is typical (Jablonski 2020). C) Rescaled cumulative disparity given cumulative richness.  The dashed line gives the expectation given continuous change.  Cumulative disparity is generally higher than expected given initial disparity and cumulative richness through the first half of clade history. }
+\end{figure*}
+
+Disparity analyses of these data conducted in prior studies suggest that cinctans show an "Early Burst" in which disparity is higher than expected given either standing disparity (Hughes et al. 2013) or cumulative disparity (Wagner and Estabrook 2015) (Figure 1A).  Standing disparity vs. log-standing richness patterns deviate strongly from expectations given constant rates of change (Jablonski 2020; see also Wright 2017), but this reflects in part the clade decreasing in richness through its later history.  The same relationship with cumulative disparity (i.e., disparity among all species known by some date) shows a weaker trend towards higher disparity than expected during the first half of clade evolution.  This in turn suggests that rates of change might have been higher early in clade history (Foote 1996). 
+
+
+\subsection{Chronostratigraphic Information}
+Our chronostratigraphic data come from 221 occurrences of Cambrian echinoderm species from 143 localities last downloaded from the Paleobiology Database on 2020-01-01. We entered 108 of those occurrences and 72 of those localities, and updated 51 of the remaining localities for the purpose of this study.  After accounting for synonymies and variant spellings, the localities represent 55 different rock units (i.e., formations and formations+members).  The accepted names of the species occurrences reflect 361 taxonomic opinions, 155 of which we entered for the purposes of this study.  The locality and occurrence data came from 81 references, with the 7 biggest sources being Nardin et al. (2017), Sprinkle (1973), Zamora (2009), Álvaro and Vizcaïno (1998), Termier and Termier (1973), Chlupac et al. (1998) and Sprinkle and Collins (2006).
+
+Localities were redated to substages using a stage-slice similar (albeit not identical to) the one used by Rasmussen et al. (2019). We did this using a custom rock unit and zonation database (https://github.com/PeterJWagner3/PaleoDB\_for\_RevBayes\_Webinar). Prominent sources for the information relevant to our study include Álvaro et al. (2001), Liñán et al. (2004), Geyer and Landing (2006), and Geyer and Shergold (2000), Álvaro et al. (2007) and Geyer (2019) for interregional correlations of rock units and trilobite zones.
+
+We use these data to put lower and upper bounds on the possible first-appearance dates of the cinctan species (Table 1).  The dates reflect the timescale of Gradstein et al. (2012). For species known from only single intervals or trilobite zones, the lower and upper bounds for both first and last appearances are necessarily identical. 
+
+
+\begin{table}[]
+\caption{Chronostratigraphic information for analyzed taxa based on occurrences in the Paleobiology Database.  FA and LA denote first and last appearance dates, with LB and UB giving the oldest and youngest possible FA and LA given known finds. “NS” gives number of collections (= collections or localities) that a species occupies.  “NR” gives number of rock units (formations or members) that a species occupies.  For \textit{Ctenocystis}, FA and sampling data are for the oldest known species (\textit{C. utahensis}) only, whereas the LA data are for the entire genus.}
+\begin{tabular}{l|llIIlI}
+Taxon      & FALB & FAUB & LALB & LAUB & NS & NR \\ \hline
+\textit{Ctenocystis} & 506.6 & 506.5 & 501.0 & 500.5 & 4 & 3\\
+\textit{Gyrocystis platessa} & 504.9 & 504.5 & 501.0 & 499.3 & 13 & 4\\
+\textit{Gyrocystis testudiformis} & 503.1 & 502.5 & 503.1 & 502.5 & 4 & 1\\
+\textit{Gyrocystis cruzae} & 503.1 & 501.0 & 503.1 & 501.0 & 1 & 1\\
+\textit{Gyrocystis badulesiensis} & 503.1 & 501.0 & 503.1 & 501.0 & 2 & 1\\
+\textit{Gyrocystis erecta} & 503.1 & 501.0 & 501.6 & 501.0 & 2 & 1\\
+\textit{Progyrocystis disjuncta} & 503.1 & 501.0 & 503.1 & 501.0 & 1 & 1\\
+\textit{Protocinctus mansillaensis} & 506.6 & 505.4 & 506.6 & 505.4 & 1 & 1\\
+\textit{Elliptocinctus barrandei} & 501.6 & 501.0 & 501.6 & 499.3 & 6 & 3\\
+\textit{Elliptocinctus vizcainoi} & 504.5 & 503.4 & 504.5 & 503.4 & 1 & 1\\
+\textit{Sucocystis theronensis} & 501.6 & 501.0 & 501.6 & 501.0 & 2 & 2\\
+\textit{Sucocystis bretoni} & 501.0 & 500.5 & 501.0 & 500.5 & 1 & 1\\
+\textit{Lignanicystis barriosensis} & 501.6 & 501.0 & 501.6 & 501.0 & 3 & 1\\
+\textit{Undatacinctus undata} & 501.0 & 499.3 & 501.0 & 499.3 & 1 & 1\\
+\textit{Sucocystis acrofera} & 499.3 & 498.2 & 499.3 & 498.2 & 2 & 1\\
+\textit{Undatacinctus quadricornuta} & 501.0 & 499.3 & 501.0 & 499.3 & 1 & 1\\
+\textit{Undatacinctus melendezi} & 501.0 & 499.3 & 498.2 & 497.0 & 9 & 2\\
+\textit{Asturicystis jaekeli} & 504.9 & 504.5 & 504.9 & 504.5 & 1 & 1\\
+\textit{Sotocinctus ubaghsi} & 505.4 & 504.9 & 505.4 & 504.5 & 2 & 2\\
+\textit{Trochocystites bohemicus} & 505.2 & 504.5 & 503.0 & 502.2 & 4 & 3\\
+\textit{Trochocystoides parvus} & 504.5 & 503.7 & 504.5 & 503.7 & 1 & 1\\
+\textit{Ludwigicinctus truncatus} & 501.6 & 500.5 & 501.6 & 500.5 & 1 & 1\\
+\textit{Graciacystis ambigua} & 504.9 & 504.5 & 503.7 & 503.1 & 3 & 1 
+\end{tabular}
+\end{table}
+
 
 \section{Methods}
 
@@ -116,8 +170,8 @@ The data matrix was partitioned according to the number of character states, so 
 In the first model, we did not allow rate heterogeneity. 
 In effect, this means we assume all characters to have the same rate of evolution.
 In the second, used Gamma-distributed rate heterogeneity to allow different characters in the matrix to have different evolutionary rates.
-In the third model, data were partitioned into feeding and non-feeding characters.
-Then the above model was applied in each partition. \textbf{PETE: is there a citation that supports the idea that these two sets of characters might evolve differently?}
+A common concern is that characters directly involved with basic organismal ecology and function such as those involved in feed might evolve under different rules than do other characters (Foote, 1994,1995; Ciampaglio, 2002).Because Smith and Zamora (2009) explicitly identify "food groove" characters, our third model partitions the data into feeding and non-feeding characters.
+Then the above model was applied in each partition.
 In effect, the third model has two times as many parameters as the first, one set for each set of characters.
 
 Convergence was reached after about 80,000 generations, as checked in the software Tracer \citep{Rambaut2018}. 
@@ -150,7 +204,7 @@ The four candidate clock models were as follows.
     \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor. 
     This will favor smaller rate shifts than those seen in an uncorrelated clock. We modeled the distributions per branch as lognormal.
     \item Early Burst: This clock models rates of evolution as exponentially decaying over time. 
-    This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. Prior analyses have indicated that there may be an early burst of diversification in this clade. \citep{Pete, was this your idea?}
+    This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. As illustrated above, disparity patterns within the clade also suggest this.
 \end{itemize}
 
 Each of these models has a different number of parameters and took a different amount of time to converge. Therefore, for each model, we first ran an exploratory MCMC to see how long convergence takes. Then we used the convergence value to choose the number of iterations per stepping stone.
@@ -196,9 +250,15 @@ The \textit{Sucocystis}, \textit{Lignanicystis} and \textit{Ellipticintus} group
 The HPD on the age of the origin of the group was -505.365 and 507.724 mya.
 
 \begin{figure*}
-  \includegraphics[width=\textwidth]{figures/Pancakes over Time.pdf}
+  \includegraphics[width=\textwidth]{figures/Pretty Cinctans Families.pdf}
 
-  \caption{A dated phylogeny of the Cinctans. Branch widths are proportional to the posterior probability of the branch, with wider branches reflecting higher posterior probability. \textbf{Pete, fill in some other meanings here?}}
+  \caption{A dated phylogeny of the Cinctans. Branch widths of nodes are proportional to the posterior probability of the branch, with wider branches reflecting higher posterior probability. Branch durations precedicng sampled species are dashed lines; dashed nodes denote cases where we reconstruct a sampled species as ancestral to the others.  We reconstruct the three cases where the implied ancestor was still extant when the daughter lineage appears as budding cladogenesis.  Asterisks denote most probable ages of first appearances.  For taxon ranges, solid colors reflect ages for which species have definitely older and definitely younger finds; transparent bars represent range of possible first and last appearances.  Extra pale bars represent cases where some of the candidates for oldest/youngest occurrence might be that age. For example,  some occurrences of \textit{Gyrocystis erecta} might be 503.1-501.0 Ma whereas others might be 501.6-501.0 Ma.  }
+\end{figure*}
+
+\begin{figure*}
+  \includegraphics[width=\textwidth]{figures/Pancakes over Time Uncertainly.pdf}
+
+  \caption{The same phylogeny but with credible intervals given for a few major divergences, include: 1) cinctans from ctenocystoids (gray); 2)  gyrocystids from other cinctans (orange);  2)  trochocystitid from other cinctans (purple);  4) sucocystids within trochocystitids.  (Because this tree reconstructs all prior familial definitions as polyphyletic, these represent the most cohesive redefinitions of those families.)}
 \end{figure*}
 
 \begin{table}[]
@@ -321,8 +381,7 @@ These first forays into hierarchical model fitting call attention to notable pie
 \subsection{What did we learn about Cinctans specifically from the tree + model}
 
 The origin time of the Cinctan-\textit{Ctenocystis} group was 507.52 mya (HPD 505.808 - 508.11 mya), with the ingroup originating at 505.747 mya (HPD 507.27 - 504.699 mya).
-Each tip has uncertainty associated with it.
-The range of this uncertainty is bounded by ... \textbf{Pete! how did we calc this biz?}.
+As we note in our discussion of the chronostratigraphic data that we use, each tip (species) has uncertainty associated with its first appearance: we might know that the first occurrence (or possible first occurrences) are in a particular trilobite zone, but that typically restricts the age to a 1-3 million year window.  This might sound trivial if we are thinking about divergences for modern taxa, but here it represents a significant proportion of expected species lifetimes, and thus a potentially large amount of time to accumulate (or not accumulate) character change.
 In RevBayes, tip uncertainty is typically treated as a uniform prior between the first and last appearance on the tip taxon.
 The uniform prior says that no age within the bounds is \textit{a priori} more likely than any other.
 Nonetheless, we do see significant structure in the distributions for each tip (Fig. S1). 
