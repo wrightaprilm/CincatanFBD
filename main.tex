@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[round]{natbib}
-\usepackage{xcolor}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{authblk}
@@ -11,7 +11,7 @@
 
 
 \title{Testing character-evolution models in phylogenetic paleobiology: a case study with Cambrian echinoderms}
-%Pete: I shifted it to "evolution" models because we get at a little more than clocks here, or at least more than most paleontologists would associate with clocks
+%Pete to others: I shifted it to "evolution" models because we get at a little more than clocks here, or at least more than most paleontologists would associate with clocks
 
 %Davey- For a working title, how about something like, "Testing character-based clock models in phylogenetic paleobiology: a case study with Cambrian echinoderms?" Feel free to change it up now and/or as we move along!
 
@@ -39,21 +39,21 @@ Macroevolutionary inference has historically been treated as a two-step process,
 Newer models, such as the fossilized birth-death model, blend the two steps.
 These methods make more complete use of fossils than the previous generation of Bayesian phylogenetic models.
 They also involve many more parameters than prior models, including parameters about which empiricists may have little intuition.
-In this manuscript, we set forth a framework for fitting complex, hierarchical models.
-We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny the Cincta (Echinodermata).
-Although the tree of cinctan species remains poorly-supported in many places, our new phylogeny raises interesting questions about how incorporating age information is expected to affect a phylogeny and provides an evolutionary framework for future macroevolutionary analyses for this enigmatic clade of Cambrian echinoderms.
+In this paper, we set forth a framework for fitting complex, hierarchical models.
+We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny of the Cincta (Echinodermata), a morphologically distinct group of Cambrian echinoderms lacking pentaradial symmetry characteristic of the phylum.
+Although the phylogeny of cinctans remains poorly understood in places, we show how models of character change and diversification feed back into understanding patterns of phylogenetic relatedness, including anagenesis and budding speciation, and our new analysis raises interesting questions about how incorporating age information is expected to affect a phylogeny. Finally, our results provide a framework for future systematic and macroevolutionary studies of cinctan echinoderms.
 
 \section{Introduction}
 
-Historically, drawing macroevolutionary inferences from phylogenetic trees has been a two-step process.
+Historically, drawing macroevolutionary inferences from phylogenetic trees has been a two-step process \citep{Harvey1991}.
 First, a researcher would estimate a phylogenetic tree from a matrix of phylogenetic characters.
 Then, they would use that tree (or a set of trees, such as a posterior sample) to fit a macroevolutionary model.
 Over the past decade, models that blend macroevolutionary inference with phylogenetic inference have become increasing common.
-For example, the fossilized birth-death process is used to estimate dated phylognetic trees.
-This process is usually implemented as a Bayesian hierarchical model, in which one model describes the evoluation of the phylogenetic characters, one describes the distribution of evolutionary rates over the tree, and one describes the process of speciation, extinction, and sampling that lead to the observed tree.
+For example, the fossilized birth-death process is used to estimate dated phylognetic trees \citep{Stadler2011, Heath2014}.
+This process is usually implemented as a Bayesian hierarchical model, in which one model describes the process of character change for phylogenetic characters, one describes the distribution of evolutionary rates over the tree, and one describes the process of speciation, extinction, and sampling that lead to the observed tree (see Wright and Warnock in this issue for a more complete discussion of this).
 In this manuscript, we describe an approach to fitting complex hierarchical models, using a dataset of Cambrian Cinctans as a focal dataset.
 
-We can divide macroevolutionary hypotheses into two non-mutually exclusive groups: those making predictions about origination and extinction dynamics, and those making predictions about rates and modes of anatomical change. 
+We can divide macroevolutionary hypotheses into two non-mutually exclusive groups: those making predictions about origination and extinction dynamics, and those making predictions about rates and modes of trait evolution. 
 The latter group includes hypotheses about shifts in rates of anatomical change and hypotheses about driven trends in which particular character states become more (or less) common over time.  
 Hypotheses predicting such patterns come both from macroecological theory and from evolutionary‑developmental theory, and thus span a range of basic issues including developmental, ecological, and physical constraints, and selection  \citep{valentine1969patterns, valentine1980determinants}
 Research programs dedicated to assessing shifts in rates and modes of anatomical evolution have been staple of quantitative paleobiology since the early 1990’s. 
@@ -81,21 +81,21 @@ These evolutionary histories include when clades and lineages diverged, the cons
 Along the same lines, we have to accept and even embrace the fact that there will always be some degree of uncertainty in all of these things.  
 These uncertainties are not reason to abandon the endeavor as hopeless; on the contrary, it will mean that those conclusions that we can reach do not assume that specific historical details are true.  
 
-In this work, we will provide an example of the approach that we are advocating using a series of analyses of the Cincta, an extinct clade of Cambrian echinoderms. 
-We will detail how paleobiologists can adapt different “clock” models and character state evolution models initially devised to accommodate uncertainties in molecular evolution to represent and model macroevolutionary hypotheses.  
+In this work, we will provide an example of the approach that we are advocating using a series of analyses of the Cincta, an extinct clade of `carpoid' echinoderms from the middle Cambrian. 
+We will detail how paleobiologists can adapt different clock models and character state evolution models initially devised to accommodate uncertainties in molecular evolution to represent and model macroevolutionary hypotheses.  
 In doing so, we will also outline protocol that paleontologists can replicate to conduct analogous analyses on other clades.  
 We will emphasize how the combination of Markov Chain Monte Carlo analyses and stepping‑stone tests allow us to marginalize specific details of character evolution models and phylogenetic relationships in order to generate the best joint summary of a clade’s evolutionary history.  
 Because there are innumerable possible models that one might consider, we will draw attention to existing methods with which paleontologists might already be familiar that should be useful for suggesting particular models as worthy of consideration.  
 Finally, we will briefly outline other theoretical and methodological areas that remain for paleobiologists and systematists to resolve and unite in the future. 
 
 \section{Taxonomic Background and Data}
-\subsection{Cincta: a Cambrian clade of stem-group echinoderms}
+\subsection{Cincta: a clade of enigmatic Cambrian echinoderms}
 %FYI when completed this section is going to attempt to 'zoom in' on what a cinctan is & why they're cool by the transitions from Why Echinoderms --> What the heck is a carpoid --> Cinctans are cool carpoids
-Echinoderms are a diverse phylum of marine animals represented today by more than 7,000 living species (Brusca and Brusca 2003) distributed among five extant classes, including sea stars, brittle stars, echinoids, sea cucumbers, and crinoids. However, the spectacular diversity of extant echinoderms, measured by both species richness and anatomical form, represents a diminutive fraction of their prodigious evolutionary history recorded in the fossil record. Because echinoderms possess an endoskeleton comprised of high-Mg calcite and exclusively marine distribution, the echinoderm fossil record is spectacularly complete and reveals approximately 30 clades distributed among 21 taxonomic classes spanning the entire Phanerozoic Eon (cite Sprinkle and Kier 1987, others). Unlike familiar echinoderms inhabiting modern oceans, such as starfish and sea urchins, Cambrian echinoderms comprise an unfamiliar, taxonomically and morphologically diverse assemblage of predominately stem-group taxa exhibiting a diversity of body plans, life modes, and ecological traits unseen in extant lineages (Zamora and Rahman, 2014). 
+Echinoderms are a diverse phylum of marine animals represented today by more than 7,000 living species \citep{brusca2003} distributed among five extant classes, including sea stars, brittle stars, echinoids, sea cucumbers, and crinoids. However, the spectacular diversity of extant echinoderms, measured by both species richness and anatomical form, represents a diminutive fraction of their prodigious evolutionary history recorded in the fossil record. Because echinoderms possess an endoskeleton comprised of high-Mg calcite and exclusively marine distribution, the echinoderm fossil record is spectacularly complete and reveals approximately 30 clades distributed among 21 taxonomic classes spanning the entire Phanerozoic Eon (cite Sprinkle and Kier 1987, others). Unlike familiar echinoderms inhabiting modern oceans, such as starfish and sea urchins, Cambrian echinoderms comprise an unfamiliar, taxonomically and morphologically diverse assemblage of predominately stem-group taxa exhibiting a diversity of body plans, life modes, and ecological traits unseen in extant lineages (Zamora and Rahman, 2014). 
 
-Perhaps no group of early echinoderms has received greater attention and controversy than the ‘carpoids’ (Rahman, 2009). Sometimes called homalozoans or calcichordates in the literature, carpoids comprise a heterogenous assemblage of extinct echinoderms including ctenocystoids, cinctans (Homostelea), solutes (Homoiostelea), and stylophorans. Although carpoids possess unique skeletal features that unambiguously identify their echinoderm affinities (Bottjer et al., 2006, Rahman, 2009; Zamora & Rahman, 2014; Zamora et al., 2020), they lack other traits considered synapomorphies of crown-group echinoderms. For example, all extant echinoderms exhibit pentaradial symmetry in adults and possess a water vascular system, unique to the phylum, used for locomotion, respiration, and excretion (Nichols, 1972).  In contrast, ‘carpoid’ taxa exhibit bilateral to asymmetrical forms, and it’s debated whether some caproids possessed a water vascular system (Smith, 2005; Lefebvre et al., 2019). Although the phylogenetic position of carpoid taxa have long been contentiously debated (see Rahman, 2009 and articles cited therein), only recently have computer-based phylogenetic analyses played a major role in evaluating among alternative hypotheses (Sumrall, 1997; Smith and Zamora, 2013; Zamora and Rahman, 2014). Crucially, these analyses have greatly benefited from improvements to identifying homologous characters across morphologically disparate early echinoderm lineages, which often arises from new fossil discoveries (e.g., Zamora et al., 2012; Smith and Zamora, 2013). These phylogenetic analyses reveal carpoids to be a paraphyletic assemblage of stem-group echinoderm taxa that help document the evolutionary transition from their ancestral, bilaterian body plan to the pentaradial symmetry characteristic of the crown-group and the majority of echinoderm lineages that have dominated marine ecosystems since the close of the Cambrian. Thus, understanding the distribution of character combinations and patterns of trait evolution in these enigmatic, pre-radial lineages are critical to deciphering the early evolution of the phylum.
+Perhaps no group of early echinoderms has received greater attention and controversy than the `carpoids’ (\citep{Rahman2009b}). Sometimes called homalozoans or calcichordates in the literature, carpoids comprise a heterogenous assemblage of extinct echinoderms including ctenocystoids, cinctans (Homostelea), solutes (Homoiostelea), and stylophorans. Although carpoids possess unique skeletal features that unambiguously identify their echinoderm affinities (Bottjer et al., 2006, Rahman, 2009; Zamora & Rahman, 2014; Zamora et al., 2020), they lack other traits considered synapomorphies of crown-group echinoderms. For example, all extant echinoderms exhibit pentaradial symmetry in adults and possess a water vascular system, unique to the phylum, used for locomotion, respiration, and excretion (Nichols, 1972).  In contrast, ‘carpoid’ taxa exhibit bilateral to asymmetrical forms, and it’s debated whether some caproids possessed a water vascular system (Smith, 2005; Lefebvre et al., 2019). Although the phylogenetic position of carpoid taxa have long been contentiously debated (see \citep{Rahman2009c} and \citep{Rahman2009b}, and articles cited therein), only recently have computer-based phylogenetic analyses played a major role in evaluating among alternative hypotheses (Sumrall, 1997; Smith and Zamora, 2013; Zamora and Rahman, 2014), and only one previous study evaluated phylogenetic hypotheses for carpoids using stratigraphic data (\citep{Rahman2009b}). Crucially, character matrices from these analyses have greatly benefited from recent improvements to identifying homologous characters across morphologically disparate early echinoderm lineages, often arising from new fossil discoveries (e.g., Zamora et al., 2012; Smith and Zamora, 2013). Although controversy remains, both recent phylogenetic analyses and stratigraphic congruence metrics support the hypothesis that carpoids are a paraphyletic assemblage of stem-group echinoderm taxa (Rahman et al., 2009; Smith and Zamora, 2012). If this view is correct, then carpoids help document the radical transition in echinoderm evolution from an ancestral, bilaterian body plan to the pentaradial symmetry characteristic of the crown-group forms which have dominated marine ecosystems since the close of the Cambrian. Thus, it is clear that understanding the distribution of character combinations and patterns of trait evolution in these enigmatic, pre-radial lineages are critical to deciphering the early evolution of the phylum.
 
-Cinctans are a significant group of nonradiate, carpoid echinoderms temporally restricted to the middle Cambrian (Miaolingian, 509 Ma-497 Ma) and paleogeographically restricted to western Gondwana, Avalonia, and Siberia. Cinctans are generally small, flattened fossils resembling a tennis racquet or badly formed pancake.
+Cinctans are a significant group of nonradiate, carpoid echinoderms temporally restricted to the middle Cambrian (Miaolingian, 509--497 Ma) and paleogeographically restricted to western Gondwana, Avalonia, and Siberia. Cinctans are generally small, flattened fossils resembling a tennis racquet or badly formed pancake.
 
 
 More to come specifically about cinctans... 
@@ -108,48 +108,66 @@ We use the character data initially published by \citep{Smith2009} and subsequen
 \begin{figure*}
   \includegraphics[width=\textwidth]{figures/Cinctan Disparity 3Ways Horizontal.pdf}
 
-  \caption{Disparity patterns for cinctans.  A. Disparity over time based on average pairwise dissimilarities among taxa (see \citep{Foote1992}).  Vertical bars represent 90-percentile error bars from bootstrapping pairwise comparisons \citep{Foote1993}.  X’s give disparity among standing richness only.  Circles give the cumulative disparity among all members of the clade at least as old as that point in time.  B) Rescaled standing disparity vs. log-taxonomic richness. Because cinctans begin with relatively high richness and then decline over time, the curve begins near the middle of the plot rather than near the bottom as is typical \citep{Jablonski2020}. C) Rescaled cumulative disparity given cumulative richness.  The dashed line gives the expectation given continuous change.  Cumulative disparity is generally higher than expected given initial disparity and cumulative richness through the first half of clade history.}
+  \caption{Disparity patterns for cinctans.  A. Disparity over time based on average pairwise dissimilarities among taxa (see \cite{Foote1992}).  Vertical bars represent 90-percentile error bars from bootstrapping pairwise comparisons \citep{Foote1993}.  X’s give disparity among standing richness only.  Circles give the cumulative disparity among all members of the clade at least as old as that point in time.  B) Rescaled standing disparity vs. log-taxonomic richness. Because cinctans begin with relatively high richness and then decline over time, the curve begins near the middle of the plot rather than near the bottom as is typical \citep{Jablonski2020}. C) Rescaled cumulative disparity given cumulative richness.  The dashed line gives the expectation given continuous change.  Cumulative disparity is generally higher than expected given initial disparity and cumulative richness through the first half of clade history.}
 \end{figure*}
 
-Disparity analyses of these data conducted in prior studies suggest that cinctans show an "Early Burst" in which disparity is higher than expected given either standing disparity (\citep{Hughes2013}) or cumulative disparity (\citep{Wagner2015}) (Figure 1A).  Standing disparity vs. log-standing richness patterns deviate strongly from expectations given constant rates of change (\citep{Jablonski2020}; see also \citep{Wright2017}), but this reflects in part the clade decreasing in richness through its later history.  The same relationship with cumulative disparity (i.e., disparity among all species known by some date) shows a weaker trend towards higher disparity than expected during the first half of clade evolution.  This in turn suggests that rates of change might have been higher early in clade history (\citep{Foote1996b}). 
+Disparity analyses of these data conducted in prior studies suggest that cinctans show an ``Early Burst" (Figure 1A) in which disparity is higher than expected given either standing disparity \citep{Hughes2013} or cumulative disparity \citep{Wagner2015} .  Standing disparity vs. log-standing richness patterns deviate strongly from expectations given constant rates of change (\cite*{Jablonski2020}; see also \cite{Wright2017}), but this reflects in part the clade decreasing in richness through its later history.  The same relationship with cumulative disparity (i.e., disparity among all species known by some date) shows a weaker trend towards higher disparity than expected during the first half of clade evolution (Fig. 1C).  This in turn suggests that rates of change might have been higher early in clade history \citep{Foote1996b}. 
 
 
 \subsection{Chronostratigraphic Information}
 Our chronostratigraphic data come from 221 occurrences of Cambrian echinoderm species from 143 localities last downloaded from the Paleobiology Database on 2020-01-01.  The locality and occurrence data came from 81 references (see \cite{Nardin2017, Zamora2009, Chlupac1998, Sprinkle2006, Termier1973, Sprinkle1973} for the seven largest contributions). We entered 108 of those occurrences and 72 of those localities, and updated 51 of the remaining localities for the purpose of this study.  After accounting for synonymies and variant spellings, the localities represent 55 different rock units (i.e., formations and formations+members).  The accepted names of the species occurrences reflect 361 taxonomic opinions, 155 of which we entered for the purposes of this study.
 
-Localities were redated to substages using a stage-slice similar (albeit not identical to) the one used by (\citep{Rasmussen2019}). We did this using a rock unit and zonation database designed by one of us (github address). Prominent sources for the information relevant to our study include \citep{Álvaro2001}, \citep{Liñán2004}, \citep{Geyer2006}, and \citep{Geyer2000}, \citep{Álvaro2007} and \citep{Geyer2019} for interregional correlations of rock units and trilobite zones.
+The Paleobiology Database returns ages based only on the entered interval, which usually is a stage. Here, nearly every cinctan-bearing locality is assigned to the Middle Cambrian and thus receives a possible age of 513-501 Ma. However, PBDB provides information allowing much more exact ages. For example, PBDB collection 67775 is one of four including \textit{Trochocystites bohemicus}. This collection is assigned to the Middle Cambrian, and thus is dated by the PBDB as 513 - 501 Ma. However, it is the collection represents the Skryje Shale, which is known to span four trilobite zones that restrict the age to 505.2 - 500.7 Ma. Thus, if we had no further information, then that would be the oldest and youngest possible ages for this collection. However, PBDB collection 67775 also is assigned to the \textit{Eccaparadoxides pusillus} trilobite zone, which further restricts the age to 505.2 - 504.5 Ma. We use a database of Paleozoic rock units and faunal zones compiled by one of us as a thesaurus to provide more exact earliest and latest possible ages for each cinctan-bearing collection. The typical locality now can be restricted to a 0.7 million year window. Prominent sources for the information relevant to our study and for interregional correlations of rock units and trilobite zones include \cite{Alvaro2001, Linan2004, Geyer2006, Geyer2000, Alvaro2007, Geyer2019}.  The overall timescale is that of \cite{Gradstein2012}. 
 
-We use these data to put lower and upper bounds on the possible first-appearance dates of the cinctan species (Table 1).  The dates reflect the timescale of \citep{Gradstein2012}. For species known from only single intervals or trilobite zones, the lower and upper bounds for both first and last appearances are necessarily identical.  This is not the case for species spanning multiple intervals. For example, \textit{Gyrocystis platessa} occurs in rocks as old as the \textit{Badulesia granieri} trilobite zone (~504.9-504.5 given \citep{Geyer2019} and Gradstein et al.’s timescale) and also occurs in rocks as young as the \textit{Solenopleuropsis marginata} trilobite zone (~501.0-499.3 Ma).  Here, the latest first possible appearance is 504.5 Ma.  We choose the widest possible uncertainty.  For example, \textit{Gyrocystis erecta} occurs in rocks belonging to the \textit{Solenopleuropsis} zone (~503.1-501.0 Ma) but also in rocks dated more specifically to the \textit{Solenopleuropsis thorali} subzone (~501.6-501.0 Ma).  Because the former set of occurrences might be as old as 503.1 Ma (given existing information), we set the possible FA for \textit{G. erecta} at 503.1 – 501.0 Ma.
 
-Finally, we also use these data to derive initial estimates of origination, extinction and sampling for Cambrian echinoderms.  We use a modified version of the Three-Timer method (\citep{Alroy2015}) that uses lognormal distributions for sampling rates per stage slice rather than a single value (see \citep{Wagner2013}).  Note that these are used only to seed the analyses rather than being treated as “known” parameters (see below).
+We use the refined dates to put lower and upper bounds on the possible first-appearance dates of the cinctan species (Table 1). For species known from only single intervals or trilobite zones, the lower and upper bounds for both first and last appearances are necessarily identical. This is not the case for species spanning multiple intervals. For example, \textit{Gyrocystis platessa} occurs in rocks as old as the \textit{Badulesia granieri} trilobite zone (~504.9-504.5 given \cite{Geyer2019} and Gradstein et al.’s timescale) and also occurs in rocks as young as the \textit{Solenopleuropsis marginata} trilobite zone (~501.0-499.3 Ma).  Here, the latest first possible appearance is 504.5 Ma. We choose the widest possible uncertainty. For example, \textit{Gyrocystis erecta} occurs in rocks belonging to the \textit{Solenopleuropsis} zone (~503.1-501.0 Ma) but also in rocks dated more specifically to the \textit{Solenopleuropsis thorali} subzone (~501.6-501.0 Ma). Because the former set of occurrences might be as old as 503.1 Ma (given existing information), we set the possible FA for \textit{G. erecta} at 503.1 – 501.0 Ma.
+
+Finally, we also use these data to derive initial estimates of origination, extinction and sampling for Cambrian echinoderms. We use a modified version of the Three-Timer method \citep{Alroy2015} that uses lognormal distributions for sampling rates per stage slice rather than a single value \citep{Wagner2013}. Note that these are used only parameterize the prior distribution of new proposals for diversification and sampling in MCMC generations and not as fixed values.
 
 \begin{table}[]
 \caption{Chronostratigraphic information for analyzed taxa based on occurrences in the Paleobiology Database.  FA and LA denote first and last appearance dates, with LB and UB giving the oldest and youngest possible FA and LA given known finds. “NS” gives number of collections (= collections or localities) that a species occupies.  “NR” gives number of rock units (formations or members) that a species occupies.  For \textit{Ctenocystis}, FA and sampling data are for the oldest known species (\textit{C. utahensis}) only, whereas the LA data are for the entire genus.}
-\begin{tabular}{l|llIIlI}
-Taxon      & FALB & FAUB & LALB & LAUB & NS & NR \\ \hline
-\textit{Ctenocystis} & 506.6 & 506.5 & 501.0 & 500.5 & 4 & 3\\
-\textit{Gyrocystis platessa} & 504.9 & 504.5 & 501.0 & 499.3 & 13 & 4\\
-\textit{Gyrocystis testudiformis} & 503.1 & 502.5 & 503.1 & 502.5 & 4 & 1\\
-\textit{Gyrocystis cruzae} & 503.1 & 501.0 & 503.1 & 501.0 & 1 & 1\\
-\textit{Gyrocystis badulesiensis} & 503.1 & 501.0 & 503.1 & 501.0 & 2 & 1\\
-\textit{Gyrocystis erecta} & 503.1 & 501.0 & 501.6 & 501.0 & 2 & 1\\
-\textit{Progyrocystis disjuncta} & 503.1 & 501.0 & 503.1 & 501.0 & 1 & 1\\
-\textit{Protocinctus mansillaensis} & 506.6 & 505.4 & 506.6 & 505.4 & 1 & 1\\
-\textit{Elliptocinctus barrandei} & 501.6 & 501.0 & 501.6 & 499.3 & 6 & 3\\
-\textit{Elliptocinctus vizcainoi} & 504.5 & 503.4 & 504.5 & 503.4 & 1 & 1\\
-\textit{Sucocystis theronensis} & 501.6 & 501.0 & 501.6 & 501.0 & 2 & 2\\
-\textit{Sucocystis bretoni} & 501.0 & 500.5 & 501.0 & 500.5 & 1 & 1\\
-\textit{Lignanicystis barriosensis} & 501.6 & 501.0 & 501.6 & 501.0 & 3 & 1\\
-\textit{Undatacinctus undata} & 501.0 & 499.3 & 501.0 & 499.3 & 1 & 1\\
-\textit{Sucocystis acrofera} & 499.3 & 498.2 & 499.3 & 498.2 & 2 & 1\\
-\textit{Undatacinctus quadricornuta} & 501.0 & 499.3 & 501.0 & 499.3 & 1 & 1\\
-\textit{Undatacinctus melendezi} & 501.0 & 499.3 & 498.2 & 497.0 & 9 & 2\\
-\textit{Asturicystis jaekeli} & 504.9 & 504.5 & 504.9 & 504.5 & 1 & 1\\
-\textit{Sotocinctus ubaghsi} & 505.4 & 504.9 & 505.4 & 504.5 & 2 & 2\\
-\textit{Trochocystites bohemicus} & 505.2 & 504.5 & 503.0 & 502.2 & 4 & 3\\
-\textit{Trochocystoides parvus} & 504.5 & 503.7 & 504.5 & 503.7 & 1 & 1\\
-\textit{Ludwigicinctus truncatus} & 501.6 & 500.5 & 501.6 & 500.5 & 1 & 1\\
-\textit{Graciacystis ambigua} & 504.9 & 504.5 & 503.7 & 503.1 & 3 & 1 
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{tabular}{l|llllll}
+\rowcolor[HTML]{C0C0C0} 
+Taxon                                                 & FALB  & FAUB  & LALB  & LAUB  & NS & NR \\ \hline
+\textit{Ctenocystis}                 & 506.6 & 506.5 & 501.0 & 500.5 & 4  & 3  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Gyrocystis platessa}         & 504.9 & 504.5 & 501.0 & 499.3 & 13 & 4  \\
+\textit{Gyrocystis testudiformis}    & 503.1 & 502.5 & 503.1 & 502.5 & 4  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Gyrocystis cruzae}           & 503.1 & 501.0 & 503.1 & 501.0 & 1  & 1  \\
+\textit{Gyrocystis badulesiensis}    & 503.1 & 501.0 & 503.1 & 501.0 & 2  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+
+\textit{Gyrocystis erecta}           & 503.1 & 501.0 & 501.6 & 501.0 & 2  & 1  \\
+\textit{Progyrocystis disjuncta}     & 503.1 & 501.0 & 503.1 & 501.0 & 1  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Protocinctus mansillaensis}  & 506.6 & 505.4 & 506.6 & 505.4 & 1  & 1  \\
+\textit{Elliptocinctus barrandei}    & 501.6 & 501.0 & 501.6 & 499.3 & 6  & 3  \\
+\rowcolor[HTML]{C0C0C0} 
+
+\textit{Elliptocinctus vizcainoi}    & 504.5 & 503.4 & 504.5 & 503.4 & 1  & 1  \\
+\textit{Sucocystis theronensis}      & 501.6 & 501.0 & 501.6 & 501.0 & 2  & 2  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Sucocystis bretoni}          & 501.0 & 500.5 & 501.0 & 500.5 & 1  & 1  \\
+\textit{Lignanicystis barriosensis}  & 501.6 & 501.0 & 501.6 & 501.0 & 3  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Undatacinctus undata}        & 501.0 & 499.3 & 501.0 & 499.3 & 1  & 1  \\
+\textit{Sucocystis acrofera}         & 499.3 & 498.2 & 499.3 & 498.2 & 2  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Undatacinctus quadricornuta} & 501.0 & 499.3 & 501.0 & 499.3 & 1  & 1  \\
+\textit{Undatacinctus melendezi}     & 501.0 & 499.3 & 498.2 & 497.0 & 9  & 2  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Asturicystis jaekeli}        & 504.9 & 504.5 & 504.9 & 504.5 & 1  & 1  \\
+\textit{Sotocinctus ubaghsi}         & 505.4 & 504.9 & 505.4 & 504.5 & 2  & 2  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Trochocystites bohemicus}    & 505.2 & 504.5 & 503.0 & 502.2 & 4  & 3  \\
+\textit{Trochocystoides parvus}      & 504.5 & 503.7 & 504.5 & 503.7 & 1  & 1  \\
+\rowcolor[HTML]{C0C0C0} 
+\textit{Ludwigicinctus truncatus}    & 501.6 & 500.5 & 501.6 & 500.5 & 1  & 1  \\
+\textit{Graciacystis ambigua}        & 504.9 & 504.5 & 503.7 & 503.1 & 3  & 1 
 \end{tabular}
 \end{table}
 
@@ -174,7 +192,7 @@ This means that for model comparisons, we used the log Bayes Factor \citep{Kass1
   \[  \textit{K}=ln[BF(M0,M1)]=ln[P(X \textbar M0)] - ln[P(X \textbar M1)],  \]
 \end{center}    
     
-In the above eqaution, the Bayes Factor for model comparison between Model 0 and model 1 is equal to the probability of model 0 minus model 1. The final Bayes Factor is calculated by exponentiating \textit{K}:
+In the above equation, the Bayes Factor for model comparison between Model 0 and model 1 is equal to the probability of model 0 minus model 1. The final Bayes Factor is calculated by exponentiating \textit{K}:
 
 \begin{center}
   \[  BF(M0,M1)=\textit{e}^\textit{K} \]
@@ -194,7 +212,7 @@ The data matrix was partitioned according to the number of character states, so 
 In the first model, we did not allow rate heterogeneity. 
 In effect, this means we assume all characters to have the same rate of evolution.
 In the second, used Gamma-distributed rate heterogeneity to allow different characters in the matrix to have different evolutionary rates.
-A common concern is that characters directly involved with basic organismal ecology and function such as those involved in feeding might evolve under different rules than do other characters (\citep{Foote1994,Foote1996a,Wagner1995,Sánchez-Villagra1998,Ciampaglio2002}).Because Smith and Zamora (2009) explicitly identify ``food groove" characters, our third model partitions the data into feeding and non-feeding characters.
+A common concern is that characters directly involved with basic organismal ecology and function such as those involved in feeding might evolve under different rules than do other characters \citep{Foote1994,Foote1996a,Wagner1995,Sanchez-Villagra1998, Ciampaglio2002}. Because Smith and Zamora (2009) explicitly identify ``food groove" characters, our third model partitions the data into feeding and non-feeding characters.
 Then the above model was applied in each partition.
 In effect, the third model has two times as many parameters as the first, one set for each set of characters.
 
@@ -211,22 +229,23 @@ Therefore, each stepping stone was run for 100,000 generations to account for an
 
 \subsection{Clock Models}
 
-A phylogeny cannot be estimated without a model of character evolution. 
+A phylogeny cannot be estimated without a model of character evolution. %Pete to others: Would it be better to state "Phylogenies alone do not have likelihoods given character data; instead, it is the combination of phylogeny (including both general relationships and divergence times) plus character evolution models that have likelihoods given character data."
 Hence, the morphology model was fit first.
-Next, we fit a clock model. 
+Next, we fit a clock model.
+Although "clock" might conjure images of a constant rates model, that is only one type of clock (i.e., a Strict Clock): clock models include a range of models that either directly predict or at least constrain plausible rates of change. % Pete to others: I think that this line might help paleo-types: we tend to equate "clock" with "strict clock"
 In order to do this, we used out best-fit morphology model and a simple, time-homogeneous FBD model to compete different clock models against one another.
 The four candidate clock models were as follows.
 \begin{itemize}
     \item A strict clock: In this model, the rate of evolution along each branch is assumed to be equal. The rate of evolutionary change is sampled from an exponential distribution. 
-    The strict clock model is most simple clock model. 
+    Note that the strict clock model is most simple clock model, and also (an) equivalent to null models used in paleontological rate studies. 
     It assumes that all branches follow a single, constant rate of morphological evolution. 
     Although simplistic, some studies have found surprising degree of concordance with fossil data fitting a strict morphological clock even when models incorporating rate variation provide a better statistical fit (Wright, 2017, Drummond and Stadler, 2016). 
     The strict clock model has one advantage in its simplicity: it adds only one parameter to the analyses, whereas relaxed clock models require many additional parameters.
-    \item An uncorrelated lognormal clock: This clock treats each branch as an independent draw from a distribution.  
+    \item An uncorrelated lognormal clock: This clock treats each branch as an independent draw from a distribution \citep{Drummond2006, Drummond2007}.  
     In this case, we used a lognormal distribution, which says most evolutionary rates are likely to be low, but with allowances for some branches to have very high rates. 
-    It should be noted that because each branch is a separate draw, the rate of an ancestral branch's evolution may be very different than its descendants - either greater or lesser.
-    \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor. 
-    This will favor smaller rate shifts than those seen in an uncorrelated clock. 
+    It should be noted that because each branch is a separate draw, the rate of an ancestral branch's evolution may be very different than its descendants - either greater or lesser.  In terms of macroevolutionary theory, an uncorrelated clock model is consistent with there being no shifts in intrinsic constraints on rates of change within a clade, but where there is considerable heterogeneity in the effects of ecology on rates of change on different lineages.  
+    \item Autocorrelated clock: These clocks assume that the rate of evolution on a descendent branch is drawn from a distribution centered on the rate of evolution of that branch's ancestor \citep{Aris-Brosou2002}.  Here, the rate is heritable, but constantly changing in a manner analogous to a morphometric character under continuous change.  Theoretically, we might expect this if rates are affected by some other variable that is continuously changing (e.g., climate variables or biological variables such as metabolism or size, see further discussion in \cite{bromham1996, gaut1992,thomas2006,bromham2015}).  % Pete to others: does this suggestion make sense?
+    Thus, this will favor smaller rate shifts than those seen in an uncorrelated clock. 
     We modeled the distributions per branch as lognormally-distributed.
     \item Early Burst: This clock models rates of evolution as exponentially decaying over time. 
     This assumes that rates of evolution are fastest near the base of the tree, and decline into the present. 
@@ -238,24 +257,33 @@ A table of competed models can be seen in Figure 2.
 
 \subsection{Tree Models}
 
-In all of our comparisons of tree models, we used variants of the fossilized birth-death model. We competed several models, reflecting different scenarios of diversification and sampling in the group.
-Several models competed are termed skyline models.
-It should be noted that for all skyline models, there is an additional interval of time from the origin to the first interval.
+In all of our comparisons of tree models, we used variants of the fossilized birth-death model.
+We competed several models, reflecting different scenarios of diversification and sampling in the group.
+The simplest model treats these rates as constant over time.  
+Of course, innumerable paleobiological studies indicate that origination, extinction and sampling all vary over time within clades (see., e.g., our Figure 3).  Shifts in these rates means that the prior probability of a branch spanning 1 million years is not constant throughout clade history \citep{Wagner2019}. % Pete to others: I figured that some background explaining why this is important might help: sorry to blow my own horn!
+Skyline models (e.g., \citep{Stadler2013b}) treat this as a possibility within FBD analyses by allowing all three rates to vary in different time-intervals. 
+We contrasted several skyline models.%Several models competed are termed skyline models.
 These models assume that the parameters of the FBD analysis can vary between discrete time bins.
-For Cintans, previous authors have observed what appears to be an early burst of evolutionary diversity in the group.
+For Cintans, most of the known species appear in the late Wulian and Drumian, with a marked decrease in the Guzhangian (Table 1).  This suggests temporal variation in origination and/or extinction rates.
 Therefore, we allowed all analytical parameters to vary between the Wuliuan, Drumian, and Guzhangian stages.
+It should be noted that for all skyline models, there is an additional interval of time from the origin to the first interval.
 
 \begin{itemize}
 \item Time-homogeneous: The first FBD model is a time-homogeneous model in which it is assumed that one rate of speciation, extinction, fossil sampling and sampling at the last occurrence time apply to the whole tree. 
 \item Two intervals: We tested a model in which the Drumian stage is split into two stages, for a total of two skyline categories (Wuliuan \& Drumian 1, Drumian 2 \& Guzhangian).
 \item Three intervals: We tested a model in which each stage is given its own set of FBD parameters, for a total of three skyline categories.
-\item Six intervals: In this model, each geological stage was broken into two intervals.
+\item Six intervals: In this model, we allowed each stage-slice to have its own rates.
 \end{itemize}
-Although most prior FBD analyses treat origination and extinction as independent variables, paleobiological studies show that the two are closely correlated (e.g., \citep{Marshall2017}). For long periods of time, the relationship is nearly linear within large clades (e.g., Figure 3A, illustrating prominent Cambrian to Silurian clades). There is more variation with clades over short periods of time such as the stage-slices that we use for these analyses (Figures 3B-C). However, there is still a distinct lognormal relationship between origination and extinction. Moreover, the lognormal relationship for only Cambrian stage-slices or for echinoderms by stage-slice fits the same overall lognormal relationship well.  Thus, our MCMC searches vary origination as an independent variable, and vary turnover (extinction/origination) as a variable dependent on origination. For the time-homogeneous model, this reflects the linear relationship shown in Figure 3A (where turnover varies from 0.90 to 1.05 times origination).  For skyline models, turnover follows the lognormal relationships illustrated in Figures 3B-C.
+Although most prior FBD analyses treat origination and extinction as independent variables, paleobiological studies show that the two are closely correlated (e.g., \citep{Marshall2017}). 
+Over long periods of time, the relationship is nearly linear within large clades (e.g., Figure 3A, illustrating prominent Cambrian to Silurian clades). 
+There is more variation with clades over short periods of time such as the stage-slices that we use for these analyses (Figures 3B-C). 
+However, there is still a distinct lognormal relationship between origination and extinction. Moreover, the lognormal relationship for only Cambrian stage-slices or for echinoderms by stage-slice fits the same overall lognormal relationship well.  
+Thus, our MCMC searches vary origination as an independent variable, and vary turnover (extinction/origination) as a variable dependent on origination. For the time-homogeneous model, this reflects the linear relationship shown in Figure 3A (where turnover varies from 0.90 to 1.05 times origination).
+For skyline models, turnover follows the lognormal relationships illustrated in Figures 3B-C.
 \begin{figure*}
   \includegraphics[width=\textwidth]{figures/Turnover PaleoStyle.pdf}
 
-  \caption{Relationships between origination and extinction rates given birth-death-sampling analyses for 12 clades prominent from the Cambrian through the Silurian.  A. Most-likely origination and extinction rates for species over entire histories: trilobites (Tr), linguliform brachiopods (Li), conodonts (Co), poriferans (Po), tabulate corals (Ta), rugosan corals (Ru), rhynchonellate brachiopods (Rh), strophomenate brachiopods (St), cephalopods (Ce), crinoids (Cr), gastropods (Ga) and bivalves (Bi). Olive green denotes members of Sepkoski's Cambrian fauna (\citep{Sepkoski1981}) dark green denotes members of Sepkoski's Paleozoic fauna, and light blue denotes members of Sepkoski's Modern fauna. B & C. Distribution of logged turnover rates for individual clades and individual stage-slices (see \citep{Bergström2009}, \citep{Cramer2011} and \citep{Rasmussen2019} for stage-slice definitions.)  The best-fit lognormal distribution also is illustrated.  B) Turnover rates for Cambrian time-slices separated.  C) Turnover rates for crinoids separated.}
+  \caption{Relationships between origination and extinction rates given birth-death-sampling analyses for 12 clades prominent from the Cambrian through the Silurian.  A. Most-likely origination and extinction rates for species over entire histories: trilobites (Tr), linguliform brachiopods (Li), conodonts (Co), poriferans (Po), tabulate corals (Ta), rugosan corals (Ru), rhynchonellate brachiopods (Rh), strophomenate brachiopods (St), cephalopods (Ce), crinoids (Cr), gastropods (Ga) and bivalves (Bi). Olive green denotes members of Sepkoski's Cambrian fauna \citep{Sepkoski1981} dark green denotes members of Sepkoski's Paleozoic fauna, and light blue denotes members of Sepkoski's Modern fauna. B \& C. Distribution of logged turnover rates for individual clades and individual stage-slices (see \cite{Bergstrom2009}, \cite{Cramer2011} and \cite{Rasmussen2019} for stage-slice definitions.)  The best-fit lognormal distribution also is illustrated.  B) Turnover rates for Cambrian time-slices separated.  C) Turnover rates for crinoids separated.  We use A to inform the MCMC analyses of range of turnover to consider for time-homogeneous models; we use B&C to inform analyses of the range of interval-specific turnovers to consider.}
 \end{figure*}
 
 Finally, for all competed models, the best-fit character change model and clock model were used as the other model subcomponents.
@@ -284,7 +312,7 @@ The HPD on the age of the origin of the group was -505.365 and 507.724 mya.
 \begin{figure*}
   \includegraphics[width=\textwidth]{figures/Pretty Cinctans Families.pdf}
 
-  \caption{A dated phylogeny of the Cinctans. Branch widths of nodes are proportional to the posterior probability of the branch, with wider branches reflecting higher posterior probability. Branch durations preceding sampled species are dashed lines; dashed nodes denote cases where we reconstruct a sampled species as ancestral to the others.  We reconstruct the three cases where the implied ancestor was still extant when the daughter lineage appears as budding cladogenesis.  Asterisks denote most probable ages of first appearances.  For taxon ranges, solid colors reflect ages for which species have definitely older and definitely younger finds; transparent bars represent range of possible first and last appearances.  Extra pale bars represent cases where some of the candidates for oldest/youngest occurrence might be that age. For example,  some occurrences of \textit{Gyrocystis erecta} might be 503.1-501.0 Ma whereas others might be 501.6-501.0 Ma.  }
+  \caption{A dated phylogeny of the Cinctans. Branch widths of nodes are proportional to the posterior probability of the branch, with wider branches reflecting higher posterior probability. Branch durations preceding sampled species are dashed lines; dashed nodes denote cases where we reconstruct a sampled species as ancestral to the others.  We reconstruct the three cases where the implied ancestor was still extant when the daughter lineage appears as budding cladogenesis (see, e.g., \citep{Eldredge1971}).  Asterisks denote most probable ages of first appearances.  For taxon ranges, solid colors reflect ages for which species have definitely older and definitely younger finds; transparent bars represent range of possible first and last appearances.  Extra pale bars represent cases where some of the candidates for oldest/youngest occurrence might be that age. For example,  some occurrences of \textit{Gyrocystis erecta} might be 503.1-501.0 Ma whereas others might be 501.6-501.0 Ma.  }
 \end{figure*}
 
 \begin{figure*}
@@ -294,7 +322,7 @@ The HPD on the age of the origin of the group was -505.365 and 507.724 mya.
 \end{figure*}
 
 \begin{table}[]
-\caption{Diversification parameters of the FBD model. These parameters are the median parameter values for the best-fit model, the model in which each geological stage has its own speciation, extinction and fossil sampling parameters.}
+\caption{Diversification parameters of the FBD model. Rates presented as the median of the 95\% HPD of the Bayesian posterior sample for the best-fit model, the model in which each geological stage has its own speciation, extinction and fossil sampling parameters.}
 \begin{tabular}{l|lll}
 Stage      & \begin{tabular}[c]{@{}l@{}}Fossil \\ Sampling \\ Rate\end{tabular} & Diversification & Turnover \\ \hline
 Guzhangian & 0.188                                                              & -0.193          & 2.148    \\
@@ -313,24 +341,24 @@ When the fossilized birth-death model was first implemented for divergence time 
 In a node calibration framework, fossils constrain the possible ages a split can have.
 The fossils are not data under this framework (Wright and Warnock 2020). 
 The researcher parameterizes what they believe to be the waiting time between the divergence and this fossil subtending it. 
-This waiting time is capturing two different quantities - the uncertainty around the age of the fossil and how long since the divergence it took to arise.
+This waiting time is capturing two different quantities - the uncertainty around the age of the fossil and how long since the divergence the fossil took to arise.
 In practice, choice of prior is often subjective, and not based on any one criterion or method, though methods for doing this do exist \citep{Nowak2013}.
 
 The second way in which this practice can result in incoherence is through the collision of priors on different nodes.
-and depending on the shape of the prior chosen, can cause the upper age bound of an ancestor split to conflict with the lower age bound of its descendant splits. 
-For example, if a researcher has little intuition for when a fossil arose in relation to the split that it subtends, they may place a uniform distribution between the longest and shortest the branch(es) between the fossil and the split may be.
+Depending on the shape of the prior chosen,  the upper age bound of an ancestor split may conflict with the lower age bound of its descendant splits. 
+For example, if a researcher has little intuition for when a fossil arose in relation to the split that it subtends, they may place a uniform distribution specifying the longest and shortest the distance between the split and the fossil subtending it may be.
 Imagine this split and fossil are the descendants of an earlier node, which also has a fossil associated with it. 
-Perhaps the researcher has an intuition that this fossil is likely close to its ancestor node. 
+Perhaps the researcher has an intuition that this older fossil is likely close to its ancestor node. 
 And so the researcher places a lognormal prior on the fossil waiting time, saying the fossil is likely close to the node, but allowing for it to possibly be much younger. 
 If incorrectly parameterized, the upper bound of the lognormal could overlap the lower bound of the uniform, implying in those cases that the descendant split could occur before the ancestor split.
 
-This is obviously undesireable.
+This is obviously undesirable.
 The fossilized birth-death model does not use node calibrations, instead parameterizing the uncertainty of the age associated with each tip.
 This is done by placing a uniform prior on each fossil tip that begins with the first occurrence of the fossil and ends with the last occurrence. 
 For some taxa, this will mean a fairly wide uncertainty per tip.
-Insect occurrences are often dated based on the type of amber they were found in.
+Insect occurrences are often dated based on the type of amber they were found in \citep{lapolla2013}.
 Some ambers can be precisely dated, as the trees that generate the amber has a narrow range.
-For others, the range of dates might be quite broad as the amber type could be made from multiple trees, or in tree types with long geological persistences. 
+For others, the range of dates might be quite broad as the amber type could be made from multiple trees, or in tree types with long geological persistences \citep{poinar2000}. 
 In fossils that have been individually dated, this uncertainty may correspond to the uncertainty on the radiometric dating.
 Regardless of the manner in which the uncertainty is derived, the meaning is clear and singular: the uncertainty on a fossil tip represents the minimum and maximum plausible age of the fossil.
 This is a far clearer quantity to describe than uncertainty on a fossil, plus the waiting time between the fossil and the speciation that generated it. 
@@ -371,26 +399,27 @@ In this model, it is assumed that characters can be in any one of \textit{k} kno
 As shown on Fig. 2, among-character rate variation fits the dataset better than a single rate of evolution across a dataset.
 This is somewhat unsuprising, as most work in this group has been conducted under parsimony, a model which assumes each character has its own rate of evolution.
 We also investigated partitioning in this dataset.
-Prior work has been equivocal about whether "ecological" traits such as feeding structures evolve at higher rates than do other characters, with more studies contradicting the notion (\citep{Foote1994,Sánchez-Villagra1998,Ciampaglio2002}) than supporting it (\citep{Wagner1995,Blomberg2003}).
+Prior work has been equivocal about whether "ecological" traits such as feeding structures evolve at higher rates than do other characters, with more studies contradicting the notion \citep{Foote1994,Sanchez-Villagra1998,Ciampaglio2002} than supporting it \citep{Wagner1995,Blomberg2003}.
 However, we find strong support for this hypothesis.
 
 We examined four clock models.
 The first was a strict clock. 
 These types of clocks are not supported often in molecular systematics.
 Molecular evolution rates are impacted by generation times,  metabolic rate, and mutation rate.
+For a more in-depth review of this concept, see Wright and Warnock (2020) in this issue.
 How this translates to rates of morphological evolution over time is not as well-studied, but all the above factors impact the body form an organism has.
 Therefore, the lack of support for a strict clock in our data (Fig. 2) is unsurprising.
 
 The remaining three clock models describe more biologically interesting scenarios.
 An autocorrelated clock model implies that a descendant branch will have a rate of evolution that is related to the rate of evolution of its ancestor.
-This is an appealing model, as we would expect that life history traits may accumulate variation slowly, and be similar to their ancestors. 
+This is an appealing model, as we would expect that life history traits that effect possible rates of change may accumulate variation slowly, and be similar to their ancestors. 
 We also examined an early burst model, in which the rate of evolution slows over time.
 This, too, is an interesting biological hypothesis that is testable given our data.
 However, both models were less well-supported than the uncorrelated lognormal clock,
 a model in which large changes in rates of evolution can be seen among ancestor-descendent pairs.
 It should be noted that while more flexible in terms of the rate variation allowed between ancestors and descendents, the uncorrelated lognormal is not necessarily the most complex model parametrically. 
 The strength of support for the most flexible model suggests that perhaps there is a substantial amount of variation that is not being currently captured by our current generations of clock models.
-There may be a universe of models awaiting description that could tap into this need.
+There may be a universe of models awaiting description that could be tapped into to fill this need.
 
 The final model subcomponent is the tree model.
 We were able to easily reject a time-homogeneous FBD model in which one rate of speciation, extinction, and fossil sampling applies across the whole tree.
@@ -422,12 +451,12 @@ Others, such as \textit{Asturicystis jaekeli} show less signal, retrieiving more
 This suggests that FBD analyses may be useful in the future for helping to narrow tip age ranges.
 In clades such as insects where tip uncertainty tends to be quite high as many tips are found in imprecisely-dated amber, this could be an analytical path to higher precision on tip ages.
 
-The topology of the tree is fully-resolved but poorly-supported on many nodes (Fig. 3).
-The tree in Fig. 3 displays the width of the branch scaled by the posterior support.
+The topology of the tree is fully-resolved but poorly-supported on many nodes (Fig. 4).
+The tree in Fig. 4 displays the width of the branch scaled by the posterior support.
 As can be seen on that figure, the posterior probability of many nodes is quite poor. 
 This is unsurprising, as bootstrap support values in prior work (cite Zamora) have also been poor.
 The placement of \textit{Protocinctus} is interesting on this phylogeny. 
-It is the oldest cinctan, however, it possesses some derived characters and has been argued (cite Rahman 2009) to be deeper within the Cintan tree, which prior phylogenetic work has supported (Rahman 2013). 
+Although it is the oldest cinctan, however, \textit{Protocinctus} also possesses some derived character states if we assume that \textit{Ctenocystis} is the appropriate outgroup (\cite{Rahman2009a}).  Accordingly, although prior phylogenetic studies place it as a basal member of the Sucocystidae, but evolving after the Sucocystidae diverged from both the Gyrocystidae and Trochocystitidae (\cite{Smith2009, Zamora2013}) . 
 The placement of \textit{Protocinctus} as sister to the rest of the cinctans is likely not solely due to the age of the fossil. This fossil is younger than its parent's next several ancestor nodes, meaning it could have been plausibly placed deeper within the Cinctan clade, but was not. 
 The split between \textit{Protocinctus} and the rest of the Cinctans is also one of the most well-supported nodes on this tree.
 
@@ -449,9 +478,9 @@ Fossil age information is treated as data under the FBD model, which has histori
 This means that the age information does not directly constrain the topology, but does still affect the distribution of topologies that are plausible given those ages. 
 It will be worth further exploration to find out when we expect age information to exert a stronger influence than character information in determining a dated tree.
 
-Interestingly, \textit{Gyrocystis} has a number of sampled ancestors in the genus. In this genus, there are a total of three sampled ancestors, one pair of which (\textit{G. erecta} and \textit{G. badulesiensis}) likely represent budding speciation.
+Interestingly, \textit{Gyrocystis} has a number of sampled ancestors in the genus. In this genus, there are a total of three sampled ancestors, one pair of which (\textit{G. erecta} and \textit{G. badulesiensis}) likely represent budding cladogenesis, i.e., a case where the ancestral species persists.
 Its sister group also has one, which may also represent budding.
-Sampled ancestors in this group are somewhat unsurprising as both turnover (2.138) and fossil sampling (0.188) are relatively high in the time interval in which the taxa occur (Table 1). 
+Sampled ancestors in this group are somewhat unsurprising as both turnover (2.138) and fossil sampling (0.188) are relatively high in the time interval in which the taxa occur (Table 2; see \citep{Foote1996c}). 
 Conditions of high turnover should facilitate the evolution of ancestors that don't sit on their own branch, as there is high loss of branches per formation of a branch.
 The elevated fossil sampling then makes these ancestors discoverable by human observers. 
 There is still a paucity of empirical literature of when sampled ancestors are expected in natural conditions.
@@ -461,18 +490,18 @@ Our results demonstrate that for Cinctans, and other similar taxa, the fossil re
 
 \section{Conclusion}
 
-In this manuscript, we have laid forth a framework for fitting complex, hierarchical models. 
+In this manuscript, we have laid forth a framework for fitting complex, hierarchical models. We also draw attention to the relationship between macroevolutionary models on which many paleobiological studies focus and corresponding phylogenetic models. 
 The fossilized birth-death represents a leap forward in terms of the integration of fossils in Bayesian phylogenetic analyses. 
 Under this model, fossils are data, not mere clade constraints.
-However, to leverage this fraemwork involves fitting several submodels to the particular dataset.
+However, to leverage this framework involves fitting several submodels to the particular dataset.
 In doing so, we also inferred a new dated phylogeny for the Cinctan group, and provide some insight as to how and why this phylogeny differs from prior work.
-We have highlighted several theoretical and empirical concerns, such as how age information impacts topology and how common sampled ancestors are in empirical datasets.
-It is our hope that in describing how such complex model fitting can be carried out in a tractable way, we will empower more empiricists to try the FBD model with their data.
+We have highlighted several theoretical and empirical concerns, such as how age information impacts topology, how common sampled ancestors are in empirical datasets.
+It is our hope that in describing how such complex model fitting can be carried out in a tractable way, we will empower more empiricists to try the FBD model with their data, and what those ancestors might mean for speciation models.
 It is in the interplay between theoretical phylogenetics and deep taxonomic knowledge of empirical paleontologists that new models that address the peculiarities of any taxonomic group will arise.
 
 
 \section{Acknowledgements}
-We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contributing substantial amounts of the Paleobiology Database information that we use, and S.R. Cole for assistance with obtaining line drawings for fossil cinctans. D.F.W acknowledges support from the Gerstner Scholars Fellowship and the Gerstner Family Foundation, the Lerner-Gray Fund for Marine Research, and the Richard Gilder Graduate School, American Museum of Natural History, as well as a Norman Newell Early Career Grant from the Paleontological Society. This is PBDB Publication # XXXXX.
+We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contributing substantial amounts of the Paleobiology Database information that we use, and S.R. Cole for assistance with obtaining line drawings for fossil cinctans. D.F.W acknowledges support from the Gerstner Scholars Fellowship and the Gerstner Family Foundation, the Lerner-Gray Fund for Marine Research, and the Richard Gilder Graduate School, American Museum of Natural History, as well as a Norman Newell Early Career Grant from the Paleontological Society. AMW acknowledges  support from an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P2O GM103424-18.  This is PBDB Publication  XXXXX.
 
 
 \bibliography{refs} 
