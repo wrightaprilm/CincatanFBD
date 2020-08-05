@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{authblk}
+\usepackage{textgreek}
 
 \newcommand{\amw}[1]{{\textcolor{ForestGreen}{AW: #1}}} % %edit
 
@@ -40,7 +41,7 @@ Newer models, such as the fossilized birth-death model, blend the two steps.
 These methods make more complete use of fossils than the previous generation of Bayesian phylogenetic models.
 They also involve many more parameters than prior models, including parameters about which empiricists may have little intuition.
 In this paper, we set forth a framework for fitting complex, hierarchical models.
-We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny of the Cincta (Echinodermata), a morphologically distinct group of Cambrian echinoderms that lack pentaradial symmetry characteristic of extant members of the phylum.
+We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny of the Cincta (Echinodermata), a morphologically distinct group of Cambrian echinoderms that lack the five-fold radial symmetry characteristic of extant members of the phylum.
 Although the phylogeny of cinctans remains poorly supported in places, we show how models of character change and diversification contribute to understanding patterns of phylogenetic relatedness and testing macroevolutionary hypotheses. Finally our new analysis raises interesting questions about how incorporating age information is expected to affect a phylogeny, and provides a framework for future systematic and macroevolutionary studies of cinctan echinoderms.
 
 \section{Introduction}
@@ -321,9 +322,10 @@ The HPD on the age of the origin of this clade is between 505.365 and 507.724 Ma
 \end{figure*}
 
 \begin{table}[]
-\caption{Diversification parameters of the FBD model. Rates presented as the median of the 95\% HPD of the Bayesian posterior sample for the best-fit model, the model in which each geological stage has its own speciation, extinction and fossil sampling parameters.}
+\caption{Diversification parameters of the FBD model. Rates presented as the median of the 95\% HPD of the Bayesian posterior sample for the best-fit model, the model in which each geological stage has its own speciation (\textlambda), extinction (\textmu) and fossil sampling intensity (\textpsi) in parameters. Turnover = \textmu/\textlambda; Diversification=\textlambda-\textmu}
 \begin{tabular}{l|lllll}
-Stage      & \begin{tabular}[c]{@{}l@{}l@{}l@{}}Fossil \\ Sampling \end{tabular} & Diversification & Speciation & Extinction & Turnover \\ \hline
+%Stage      & \begin{tabular}[c]{@{}l@{}l@{}l@{}}Fossil \\ Sampling \end{tabular} & Diversification & Speciation & Extinction & Turnover \\ \hline
+Stage      & \textpsi & Diversification & \textlambda & \textmu & Turnover \\ \hline
 Guzhangian & 0.188                                                              & -0.193  & 0.493 &  0.687 &       2.148    \\
 Drumian    & 0.260                                                              & 0.317    & 1.28 &  0.964 &      0.714   \\
 Wuliuan    & 0.224                                                              & -2.657  & 0.916 &   3.574 &      4.936   
@@ -379,8 +381,6 @@ Finally, using our morphological evolution and clock models, we competed several
 Scoring a precise marginal likelihood for the total tripartite model is the most computationally intensive part of the work. 
 By saving this for last, and first fitting the less parameter-rich morphological evolution and clock models, this estimation is made far more tractable for an average researcher to conduct on a laptop or desktop computer. 
 
-
-
 \subsection{What does the chosen set of models tell us?}
 
 Being able to fit a model doesn't mean that fitting that model tells us anything about biology. 
@@ -404,7 +404,7 @@ The first was a strict clock.
 These types of clocks rarely are supported in molecular systematics.
 Molecular evolution rates are impacted by generation times,  metabolic rate, and mutation rate.
 For a more in-depth review of this concept, see Wright and Warnock (2020) in this issue. %needs references added
-How this translates to rates of morphological evolution over time is not as well-studied, but all the above factors likely impact the evolution of anatomical form in organisms. %
+How this translates to rates of morphological evolution over time is not as well-studied, but all the above factors are also likely impact the evolution of anatomical form. %
 Therefore, the lack of support for a strict clock in our data (Fig. 2) is unsurprising.
 
 The remaining three clock models describe more biologically interesting scenarios.
@@ -477,11 +477,15 @@ It will be worth further exploration to find out when we expect age information 
 
 Interestingly, \textit{Gyrocystis} has a number of sampled ancestors in the genus. In this genus, there are a total of three sampled ancestors, one pair of which (\textit{G. erecta} and \textit{G. badulesiensis}) likely represent budding cladogenesis, i.e., a case of speciation where the ancestral species persists. Its sister group also has one, which may also represent evidence for budding speciation. We emphasize these data show evidence for budding speciation despite the fact that we did not explicitly model stasis nor distinguish between ``punctuational" changes associated with speciation vs. continuous change within lineages (e.g., \citealp{EldredgeGould1972, WagnerMarcot2010}). However, the differences between character changes associated with speciation vs. continuous background change for these data might be small enough to be subsumed by the uncorrelated relaxed clock model we employed, which models rate shifts as occurring between branches but constant across a given branch's duration. Nevertheless, future analyses employing more complex approaches to modeling speciation dynamics in fossil cinctans may outperform the models considered herein.
 
-Evidence for sampled ancestors in the cinctan fossil record might seem surprising given that the echinoderm record is less complete than many other marine invertebrates \citep{FooteSepkoski1999}, although recent FBD studies find strong evidence for their occurrence in the particularly well-sampled record of Paleozoic crinoid echinoderms \citep{Wright2017jp, WrightToom2017}.  However, four of the five cases for cinctans are from the Drumian, for which skyline models imply the highest sampling rate for cinctans. The probability of sampling ancestor-descendant pairs reflect the probability of sampling two species, i.e., [completeness]\textsuperscript{2} \citep{Foote1996c}, where:
+Evidence for sampled ancestors in the cinctan fossil record might seem surprising given that the echinoderm record is less complete than many other marine invertebrates \citep{FooteSepkoski1999}, although recent FBD studies find strong evidence for their occurrence in the particularly well-sampled record of Paleozoic crinoid echinoderms \citep{Wright2017jp, WrightToom2017}.  However, four of the five cases for cinctans are from the Drumian, for which skyline models imply the highest sampling rate for cinctans. The probability of sampling ancestor-descendant pairs reflect the probability of sampling two species (i.e., [completeness]\textsuperscript{2}, see \citealp{Foote1996c}) is: 
 %Davey-- need equation number from Foote1996.I think we'll need to say what psi and mu are if it's not stated somewhere else in the manuscript (I don't think it is?)
+%Pete: I put lambda, mu & psi in Table 1. I also added the package that lets us just put Greek letters into the text.
+%\[\textit{completeness} = \frac{\psi}{\psi+\mu} \\ %\citeauthor{foote1997estimating}  1997 eq. 1b\]\
+%\end{center}
 \begin{center}
-\[\textit{completeness} = \frac{\psi}{\psi+\mu}\]
+\[\textit{Pr}\textrm{[sampling} \: \textrm{two} \: \textrm{species]} = (\frac{\psi}{\psi+\mu})\textsuperscript{2} \]
 \end{center}
+where \textit{{\textpsi}} is the fossilization rate and \textit{{\textmu}} is the extinction rate (see \citealp{foote1997estimating}, equation 1b).
 
 Still, even at the peak during the Drumian, we expect completeness of ~0.21. This in turn predicts that we should find direct ancestor-descendant pairs only 4\% of the time.  However, sampling of ancestors and descendants often should be more probable than global sampling rates imply because sampling rates vary geographically as well as temporally. Because ancestors and descendants usually occur in the same geographic regions and environments, and because ancestors and descendants must at least abut temporally, factors favoring the sampling of any one species often favor the sampling of close relatives, including ancestor(s) \citep{WagnerErwin1995}. 
 %Evidence for sampled ancestors in this group is somewhat unsurprising as both turnover (2.138) and fossil sampling (0.188) are relatively high in the time interval in which the taxa occur (Table 2; see \citep{Foote1996c}). 
@@ -489,11 +493,13 @@ Still, even at the peak during the Drumian, we expect completeness of ~0.21. Thi
 
 %The elevated fossil sampling then makes these ancestors more readily discoverable by human observers. 
 %There is still a paucity of empirical literature of when sampled ancestors are expected in natural conditions. 
-Cinctans have other paleobiological characteristics that make discovery of sampled ancestors relatively probable: (1) the group occurs over a small window of time, allowing for the assessment of taxonomic completeness, (2) they are marine, allowing for better fossilizaton potential than many groups, such as terrestrial vertebrates, (3) they have mineralized skeletons, and are preserved well enough (often as either molds or recrystallized calcite) to code morphological features, (4) they are numerically abundant fossils, particularly in rocks from the Iberian Chains of Spain and the Montagne Noire of southern France, which enables the collection of multiple specimens and assessment of more complete material, and (5) they are small, making it more tractable to score characters from relatively complete specimens.
+Cinctans have other paleobiological characteristics that make discovery of sampled ancestors relatively probable: (1) the group occurs over a small window of time, allowing for the assessment of taxonomic completeness, (2) they are marine taxa, allowing for better fossilizaton potential than many groups, such as terrestrial vertebrates, (3) they have mineralized skeletons, and are preserved well enough (often as either molds or recrystallized calcite) to code morphological features, (4) they are numerically abundant fossils, particularly in rocks from the Iberian Chains of Spain and the Montagne Noire of southern France, which enables the collection of multiple specimens and assessment of more complete material, and (5) they are small, making it more tractable to score characters from relatively complete specimens.
 
-One final reason why we might not be surprised to find as many cinctan sampled ancestors as we do stems from the fact that reconstructed ancestors co-occur with reconstructed descendants in some cases (Figs. 4-5).  Budding cladogenesis is consistent with a variety of allopatric speciation models in which biological traits enhancing preservation probabilities (e.g., broad geographic ranges and long durations) also enhance the probability of leaving daughter taxa \citep{WagnerErwin1995}, all else being equal. This becomes particularly relevant because both kinds of occupancy patterns and sampling among contemporaneous species are typically exponential \citep{Liow2013,WagnerMarcot2013,Foote2016}, with common species having individual sampling probabilities much greater than average. Therefore, if high occupancy is linked with the propensity for generating more daughter species, then we expect a fossil record biased in favor of species that had daughter species.  This in turn means that we expect ancestor-descendant pairs to be more common that completeness metrics would predict.  Our results suggest cinctans conform to this general model, and other taxa with similar preservation and sampling intensity may similarly contain many sampled ancestors. 
+One final reason why we might not be surprised to find as many cinctan sampled ancestors as we do stems from the fact that reconstructed ancestors co-occur with reconstructed descendants in some cases (Figs. 4-5).  Budding cladogenesis is consistent with a variety of allopatric speciation models in which biological traits enhancing preservation probabilities (e.g., broad geographic ranges and long durations) also enhance the probability of leaving daughter taxa \citep{WagnerErwin1995}, all else being equal. This becomes particularly relevant because both kinds of occupancy patterns and sampling among contemporaneous species are typically exponential \citep{Liow2013,WagnerMarcot2013,Foote2016}, with common species having individual sampling probabilities much greater than average. Therefore, if high occupancy is linked with the propensity for generating more daughter species, then we expect a fossil record biased in favor of species that had daughter species.  This in turn means that we expect ancestor-descendant pairs to be more common than completeness metrics would predict.  Our results suggest cinctans conform to this general model, and other taxa with similar preservation rates and sampling intensity may also contain sampled ancestors. 
 
-In conclusion, the approach to phylogenetic paleobiology emphasized herein are not only to resolving relationships and taxonomic issues, but also provide a wealth of data for addressing a wide variety of far-reaching issues in macroevolutionary theory, including questions regarding tempo and mode in evolution and the origin of species.
+We hope our case study of cinctan echinoderms illustrates how the methodological approaches to phylogenetic paleobiology discussed herein provide useful tools for a diverse range of paleontological interests and pursuits. 
+Not only does our phylogenetic analysis of the Cincta provide insight into patterns of their evolutionary relationships and highlight potential taxonomic issues, but it also provide a wealth of data for addressing a wide variety of far-reaching broader issues in macroevolutionary theory, including fundamental questions regarding the tempo and mode of evolutionary change and the origin of species.
+
 
 
 
@@ -519,7 +525,8 @@ We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contr
 %Note also that trees implying budding cladogenesis typically imply speciational (punctuated) change. However, we did this using the Mk model, which effectively models what \citet{EldredgeGould1972} called "phyletic gradualism" for discrete characters and where \[{\alpha}\textit{t}\]
 
 
-%gives the expected number of changes over time \textit{t}.  Under speciational change, we expect \[{\epsilon}{\lambda}\textit{t}\] changes over time, where \[\lambda\] is the cladogenesis rate and \[\epsilon\] is the probability of change per speciation event \citep{WagnerMarcot2010}. The only difference in expectations for any one branch is that continuous change always predicts \[{\alpha}\textit{t}\] changes whereas speciational change predicts \[{\epsilon}(1+{\lambda})\textit{t}\] changes \textit{if} that branch begins with a cladogenetic event.  This difference might well be small enough to be subsumed by the relaxed clock models that we employ here. However, one key distinction remains: under the speciational model, \[{\epsilon}{\lambda}\] would change as the FBD model alters the speciation rate as well as the speciational change rate.  Accordingly, skyline models would predict shifts in frequencies of change even under constant rate of change. Under the continuous model, there is no such connection and expected change should be completely independent of speciation. Our results suggest that future analyses of the Cincta that employ this approach very well might do even better than the models that we do examine. %\epsilon \lambda t
+%Pete: I was just using the textGreek functions to make this readable.  It still can get cut, or moved into our other paper. Davey to Pete: Ah! Sorry. I recompiled the file and noticed this was there and thought it was a mistake on my part.
+%gives the expected number of changes over time \textit{t}.  Under speciational change, we expect \textepsilon \textlambda \textit{t} changes over time, where \textlambda is the cladogenesis rate and \textepsilon is the probability of change per speciation event \citep{WagnerMarcot2010}. The only difference in expectations for any one branch is that continuous change always predicts \textalpha\textit{t} changes whereas speciational change predicts \textepsilon(1+\textlambda)\textit{t} changes \textit{if} that branch begins with a cladogenetic event.  This difference might well be small enough to be subsumed by the relaxed clock models that we employ here. However, one key distinction remains: under the speciational model, \textepsilon\textlambda would change as the FBD model alters the speciation rate as well as the speciational change rate.  Accordingly, skyline models would predict shifts in frequencies of change even under constant rate of change. Under the continuous model, there is no such connection and expected change should be completely independent of speciation. Our results suggest that future analyses of the Cincta that employ this approach very well might do even better than the models that we do examine. %\epsilon \lambda t
 %Where continuous change and speciational change make truly distinct predictions is for a part of the system that our current methods do not examine: that is, what is the probability of net stasis for species for species such as \textit{Gyrocystis platessa},  \textit{G. ambigua} and \textit{Trochocystites bohemicus} under the Mk model?  This would extend to the probability of net stasis for the several species with uncertain first and last appearances after extending the principles presented by \citet{baridosottani2020}) to determine the probabilities that individual species had particular durations given uncertainty in true first and last appearances. Our results suggest suggest that future analyses of this sort will reject continuous change models in favor of 
 %In this way, cinctans may represent a sort of best case for calculating sampled ancestor probabilities.
 
