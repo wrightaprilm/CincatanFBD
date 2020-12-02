@@ -47,11 +47,11 @@ Although the phylogeny of cinctans remains poorly supported in places, we show h
 \section{Introduction}
 
 Historically, drawing macroevolutionary inferences from phylogenetic trees has been a two-step process \citep{Harvey1991}.
-First, a researcher would estimate a phylogenetic tree from a matrix of phylogenetic characters.
+First, a researcher would estimate a phylogenetic tree from a matrix of phylogenetic characters (typically morphological characters or molecular sequence characters).
 Then, they would use that tree (or a set of trees, such as a posterior sample) to fit a macroevolutionary model.
 Over the past decade, models that blend macroevolutionary inference with phylogenetic inference have become increasing common.
 For example, the fossilized birth-death process is used to estimate dated phylognetic trees \citep{Stadler2011, Heath2014}.
-This process is usually implemented as a Bayesian hierarchical model, in which one model describes the process of character change for phylogenetic characters, one describes the distribution of evolutionary rates over the tree, and one describes the process of speciation, extinction, and sampling that lead to the observed tree (see Wright and Warnock in this issue for a more complete discussion of this).
+This process is usually implemented as a Bayesian hierarchical model, in which one model describes the process of character change for phylogenetic characters, one describes the distribution of evolutionary rates over the tree, and one describes the process of speciation, extinction, and sampling that lead to the observed tree (see Warnock and Wright in this issue for a more complete discussion of this).
 In this manuscript, we describe an approach to fitting complex hierarchical models using a focal dataset of cinctan echinoderms.
 
 We can divide macroevolutionary hypotheses into two non-mutually exclusive groups: those making predictions about origination and extinction dynamics, and those making predictions about rates and modes of trait evolution. 
@@ -403,7 +403,7 @@ We examined four clock models.
 The first was a strict clock. 
 These types of clocks rarely are supported in molecular systematics.
 Molecular evolution rates are impacted by generation times,  metabolic rate, and mutation rate.
-For a more in-depth review of this concept, see Wright and Warnock (2020) in this issue. %needs references added
+For a more in-depth review of this concept, see Warnock and Wright (2020) in this issue. %needs references added
 How this translates to rates of morphological evolution over time is not as well-studied, but all the above factors are also likely impact the evolution of anatomical form. %
 Therefore, the lack of support for a strict clock in our data (Fig. 2) is unsurprising.
 
@@ -434,7 +434,7 @@ The Bayes Factor is a reasonably conservative test, and did reject more paramete
 Together, these models paint a picture of evolution in which trophically-important characters evolve according to different mechanisms than non-trophic characters.
 We find evidence for a world in which at times of notable transitions of the Earth (geological stages), we see change in the fundamental processes of diversification and sampling.
 And we come to understand that from ancestor to descendant, different life history pressures lead to changes in the rate at which evolutionary change accumulates. 
-These first forays into hierarchical model fitting call attention to notable pieces, such as the clock model, where we may be able to examine sources of heterogeneity and improve our models even further.
+These first forays into hierarchical model fitting call attention to significant pieces, such as the clock model, where we may be able to examine sources of heterogeneity and improve our models even further.
 
 \subsection{Cinctan phylogeny: implications for systematics and macroevolution}
 
@@ -471,8 +471,12 @@ We did not recover these as monophyletic, with \textit{Elliptocinctus barrandei}
 This node is younger than the earliest appearance of \textit{Elliptocinctus vizcainoi}.
 In order for these two taxa to be monophyletic, the strength of evidence in the character data would have to be strong enough to either move \textit{Elliptocinctus vizcainoi} into that grouping (which is a canonical position for \textit{Elliptocinctus}), thereby moving the age of the whole group back several million years, or would have to move \textit{Elliptocinctus barrandei} out of it.
 Cinctans have notable homoplasy in the group and a small amount of characters.
-Fossil age information are treated as data under the FBD model, which has historically not been true of calibration methods, in which fossil age information was used to set constraints on clade ages.
-This means that the age information does not directly constrain the topology, but does still affect the distribution of topologies that are plausible given those ages. 
+For this reason, the inclusion of other information may be a significant benefit to the accuracy and clarity of phylogenetic and macroevolutionary solutions.
+In particular, fossil age information is not confounded by homoplasy.
+Fossil age information are treated as data under the FBD model, which has historically not been true of calibration methods, in which fossil age information was used to set constraints on clade ages. 
+This means that the age information does not directly constrain the topology.
+Topology is determined from the discrete character data.
+Fossil age information is used to date the tree and determine which of the topologies are most plausible, given the ages available.
 It will be worth further exploration to find out when we expect age information to exert a stronger influence than character information in determining a dated tree.
 
 Interestingly, \textit{Gyrocystis} has a number of sampled ancestors in the genus. In this genus, there are a total of three sampled ancestors, one pair of which (\textit{G. erecta} and \textit{G. badulesiensis}) likely represent budding cladogenesis, i.e., a case of speciation where the ancestral species persists. Its sister group also has one, which may also represent evidence for budding speciation. We emphasize these data show evidence for budding speciation despite the fact that we did not explicitly model stasis nor distinguish between ``punctuational" changes associated with speciation vs. continuous change within lineages (e.g., \citealp{EldredgeGould1972, WagnerMarcot2010}). However, the differences between character changes associated with speciation vs. continuous background change for these data might be small enough to be subsumed by the uncorrelated relaxed clock model we employed, which models rate shifts as occurring between branches but constant across a given branch's duration. Nevertheless, future analyses employing more complex approaches to modeling speciation dynamics in fossil cinctans may outperform the models considered herein.
@@ -516,6 +520,7 @@ We believe the interplay between theoretical phylogenetics and deep taxonomic kn
 
 
 \section{Acknowledgements}
+This manuscript is one of several associated with the Paleontological Society short course, hosted at the Geological Society Annual Meetings in Phoenix. We thank the Paleontological Society for the support that made the course and manuscript possible.
 We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contributing substantial amounts of the Paleobiology Database information that we use, and S.R. Cole for assistance with obtaining line drawings for fossil cinctans. AMW acknowledges  support from an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P2O GM103424-18. D.F.W acknowledges support from the Gerstner Scholars Fellowship and the Gerstner Family Foundation, the Lerner-Gray Fund for Marine Research, and the Richard Gilder Graduate School, American Museum of Natural History, as well as a Norman Newell Early Career Grant from the Paleontological Society.  This is PBDB Publication  XXXXX.
 
 % Text from Pete below!
