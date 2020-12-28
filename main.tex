@@ -42,7 +42,7 @@ These methods make more complete use of fossils than the previous generation of 
 They also involve many more parameters than prior models, including parameters about which empiricists may have little intuition.
 In this paper, we set forth a framework for fitting complex, hierarchical models.
 We ultimately fit and use a joint tree and diversification model to estimate a dated phylogeny of the Cincta (Echinodermata), a morphologically distinct group of Cambrian echinoderms that lack the five-fold radial symmetry characteristic of extant members of the phylum.
-Although the phylogeny of cinctans remains poorly supported in places, we show how models of character change and diversification contribute to understanding patterns of phylogenetic relatedness and testing macroevolutionary hypotheses. 
+Although the phylogeny of cinctans remains poorly supported in places, we show how models of character change and diversification can contribute to understanding patterns of phylogenetic relatedness and testing macroevolutionary hypotheses. 
 
 \section{Introduction}
 
@@ -101,7 +101,7 @@ Cinctans are a significant group of non-radiate, carpoid echinoderms temporally 
 Despite their diminutive size, geological antiquity, and narrow paleogeographic and stratigraphic ranges, the significance of cinctans to understanding early echinoderm evolution, as well as their evolutionary implications surrounding ancestral character states in ancient deuterostomes \citep{SmithSwalla2009}, has led to a substantial amount of interest to decipher their paleobiology. Recent advances in cinctan paleobiology include efforts to better understand patterns of taxonomic diversity \citep{ZamoraAlvaro2010}, ontogeny and development \citep{Smith2005,ZamoraRahmanSmith2013}, life mode and feeding ecology \citep{Rahman2009b, RahmanEtAl2015,ZamoraRahman2015}, convergence and adaptive evolution \citep{ZamoraSmith2008} and phylogenetic relationships \citep{Freidrich1993, Sdzuy1993, SmithZamora2009, ZamoraRahmanSmith2013}. In this study, we combine morphological data with fossil age information to re-evaluate phylogenetic relationships and evolutionary dynamics among cinctan lineages using hierarchical Bayesian phylogenetic models and provide a phylogenetic template for future systematic and macroevolutionary studies.
 \begin{figure*}
   \includegraphics[width=\textwidth]{figures/Cinctan_diagram-01.jpg}
-  \caption{Generalized diagram of cinctan morphology based on the ventral side of \textit{Trochocystities}. Marginal plates, i.e., comprising the cinctus, are labeled from the anterior to posterior following \cite{Freidrich1993}; “l” and “r” refer to the left and right side of the theca in dorsal view. See \cite{SmithZamora2009} and \cite{Rahman2016} for additional views of fossils and anatomical reconstructions.}
+  \caption{Generalized diagram of cinctan morphology based on the ventral side of \textit{Trochocystities}. Marginal plates, i.e., comprising the cinctus, are labeled from the anterior to posterior following \cite{Freidrich1993}; “l” and “r” refer to the left and right side of the theca in dorsal view. See \cite{SmithZamora2009} and \cite{Rahman2016} for additional views of fossils and their anatomical reconstructions.}
 \end{figure*}
 
 \subsection{Character Data}
@@ -173,7 +173,7 @@ Taxon                                                 & FA\textsubscript{LB}  & 
 \subsection{Chronostratigraphic Data}
 Our chronostratigraphic data come from 221 occurrences of Cambrian \amw{From Reviewer 2: Are these occurrences for all Cambrian echinoderms or just cinctans? If they are all echinoderms then state how this dataset was filtered to retain only cinctans, and whether this was done before or after the work described below on improving the precision of time intervals. If this is all echinoderms then some justification for changing focal clade should be given before describing what was done.}\pjw{I'm a little stumped on this. Filtering the data shouldn't require description, should it? I'm not sure how we'd get the data for individual species without filtering in someway. Our explanations for "why" come below in the methods, which I think is more appropriate} 
 \amw{Yeah, I'm OK with this} echinoderm species from 143 localities last downloaded from the Paleobiology Database (PBDB) on 2020-01-01.  
-(R-code used for these downloads and the subsequent refinements of PBDB data described below as well as initial generation of RevBayes scripts are available at: \href{http://github.com/PeterJWagner3/PaleoDB_for_RevBayes_Webinar} and also \href{http://paleobiodb.org/#/resources}.)
+(R-code used for these downloads and the subsequent refinements of PBDB data described below as well as initial generation of RevBayes scripts are available at: \href{http://github.com/PeterJWagner3/PaleoDB\_for\_RevBayes\_Webinar} and also \\ \href{http://paleobiodb.org/\#/resources}.)
 
 The locality and occurrence data came from 81 references with the seven biggest sources including \citet{Nardin2017}, \citet{Zamora2009}, \citet{Chlupac1998}, \citet{Sprinkle2006}, \citet{Termier1973} and \citet{Sprinkle1973}. We ourselves entered 108 of those occurrences and 72 of those localities, and updated 51 of the remaining localities for the purpose of this study.  After accounting for synonymies and variant spellings, the localities represent 55 different rock units (i.e., formations and formations+members).  The accepted names of the species occurrences reflect 361 taxonomic opinions, 155 of which we entered for the purposes of this study.
 
@@ -319,7 +319,7 @@ Parameters of the best-fit FBD model can be seen on Table 2.
 
 \subsection{Cinctan phylogeny}
 
-The phylogeny estimated can be seen in Fig. 4.
+The phylogeny estimated can be seen in Fig. 5.
 As expected, \textit{Ctenocystis} is sister to the cinctans. 
 \textit{Protocinctus}, which has been recovered in some recent studies as nested deep within the cinctans \citep{SmithZamora2009}, is recovered here as sister to the rest of the clade. 
 The genus \textit{Gyrocystis} is monophyletic, with several species placed as sampled ancestors within the clade. 
@@ -480,7 +480,7 @@ As can be seen on that figure, the posterior probability of many nodes is quite 
 This is unsurprising, as bootstrap support values in prior work have also been low \citep{SmithZamora2009, ZamoraEtAl2013}.
 The placement of \textit{Protocinctus} is interesting on this phylogeny. 
 Although it is the oldest cinctan, however, \textit{Protocinctus} also possesses some derived character states if we assume that \textit{Ctenocystis} is the appropriate outgroup \citep{Rahman2009a}.  Accordingly, prior phylogenetic studies place it as a basal member of the Sucocystidae, but evolving after the Sucocystidae diverged from both the Gyrocystidae and Trochocystitidae \citep{SmithZamora2009, ZamoraRahmanSmith2013}. 
-The placement of \textit{Protocinctus} as sister to the rest of the cinctans is likely not solely due to the age of the fossil. This fossil is younger than its parent's next several ancestor nodes, meaning it could have been plausibly placed in a more derived position nested within the cinctan clade, but was not. 
+The placement of \textit{Protocinctus} as sister to the rest of the cinctans is likely not solely due to the age of the fossil. This fossil is younger than its parent's next several ancestor nodes, meaning it could have been plausibly placed in a more derived position nested within the cinctan clade, but was not in the phylogeny inferred by the model preferred by Bayes Factors (see Fig. S2 for alternative positions of \textit{Protocinctus} in sub-optimal models). 
 The split between \textit{Protocinctus} and the rest of the cinctans is also one of the most well-supported nodes on this tree.
 
 In the in-group topology, \textit{Asturicystis}, \textit{Progyrocystis}, and \textit{Graciacystis} form a weakly-supported clade that is sister to the rest of the \textit{Gyrocystis}.
@@ -548,7 +548,7 @@ We believe the interplay between theoretical phylogenetics and deep taxonomic kn
 
 \section{Acknowledgements}
 This manuscript is one of several associated with the Paleontological Society short course, hosted at the Geological Society Annual Meetings in Phoenix. We thank the Paleontological Society for the support that made the course and manuscript possible.
-We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contributing substantial amounts of the Paleobiology Database information that we use, and S.R. Cole for assistance with obtaining line drawings for fossil cinctans. AMW acknowledges  support from an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P2O GM103424-18. D.F.W acknowledges support from the Gerstner Scholars Fellowship and the Gerstner Family Foundation, the Lerner-Gray Fund for Marine Research, and the Richard Gilder Graduate School, American Museum of Natural History, as well as a Norman Newell Early Career Grant from the Paleontological Society.  This is PBDB Publication  XXXXX.
+We thank A. Lin, P. Novack-Gottshall, P. Borkow, P. Hearn and A. Hendy for contributing substantial amounts of the Paleobiology Database information that we use, and S.R. Cole for assistance with obtaining line drawings for fossil cinctans. S. Carlson, S. Zamora, B. Deline, and one anonymous reviewer are thanked for their insightful and constructive reviews.  AMW acknowledges  support from an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P2O GM103424-18. D.F.W acknowledges support from the Gerstner Scholars Fellowship and the Gerstner Family Foundation, the Lerner-Gray Fund for Marine Research, and the Richard Gilder Graduate School, American Museum of Natural History, as well as a Norman Newell Early Career Grant from the Paleontological Society.  This is PBDB Publication  XXXXX.
 
 % Text from Pete below!
 
